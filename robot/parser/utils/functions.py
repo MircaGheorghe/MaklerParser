@@ -14,10 +14,16 @@ def get_valid_links(cat):
     return Link.objects.filter(category=cat, payment = True)
 
 def get_last_phone(cat):
+    phone_array = []
     soup = bs(requests.get(cat).content, 'html.parser')
     for article in soup.find('main', id = 'mainAnList').find('noscript').find('div', 'ls-detail').find_all('article'):
-        print(article.find('div', 'ls-detail_anData').find_all('span')[-1])
-    return False
-    # secv = soup.find('main', attrs={'id':'mainAnList'})
-    # for sec in secv.find_all('div', class_ = 'ls-detail_anData'):
-    #     print(sec.find('span'))
+        phone = article.find('div', 'ls-detail_anData').find_all('span')[-1].text
+        phone_array.append(phone)
+        first = phone_array[0].replace('-', '')
+    if(not len(first.split(',')) > 1):
+        if not Account.objects.filter(username=first):
+            return True
+        else:
+            return False
+    else:
+        return False

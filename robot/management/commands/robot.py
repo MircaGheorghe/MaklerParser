@@ -20,8 +20,10 @@ class Command(BaseCommand):
             if not links:
                 continue
             l = links[0].account
-            func.get_last_phone(cat.content)
-            # pasteMakler = test.pasteMakler(l.username, l.password)
+            if not func.get_last_phone(cat.content):
+                print("Yess")
+                continue
+            pasteMakler = test.pasteMakler(l.username, l.password)
             getMakler = test.getMakler(links[0].content, headers)
             pasteMakler.change_location('https://makler.md/md/an/web/add')
             pasteMakler.choose_category(getMakler.get_categories())
