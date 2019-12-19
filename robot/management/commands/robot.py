@@ -3,6 +3,9 @@ from robot.parser.include import class_test as test
 from robot.models import *
 from robot.parser.utils import functions as func
 import requests
+import time
+
+
 
 
 class Command(BaseCommand):
@@ -14,14 +17,13 @@ class Command(BaseCommand):
             'user-agent' : 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'
         }
 
-
+        start = time.time()
         for cat in Category.objects.all():
             links = func.get_valid_links(cat)
             if not links:
                 continue
             l = links[0].account
             if not func.get_last_phone(cat.content):
-                print("Yess")
                 continue
             pasteMakler = test.pasteMakler(l.username, l.password)
             getMakler = test.getMakler(links[0].content, headers)
@@ -36,3 +38,7 @@ class Command(BaseCommand):
             pasteMakler.complete_specification(getMakler.specifications)
             pasteMakler.paste_post()
             pasteMakler.quit_driver()
+
+            end = time.time()
+            result = end - start
+            print(result)
