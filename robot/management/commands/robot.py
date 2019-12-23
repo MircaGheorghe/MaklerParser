@@ -40,6 +40,8 @@ class Command(BaseCommand):
             print("A ales categoria")
             pasteMakler.complete_adress(getMakler.get_general_information()[1], getMakler.get_district(), getMakler.get_region())
             print("a ales regiunea")
+            pasteMakler.set_period(getMakler.get_period())
+            print("a setat perioada")
             pasteMakler.complete_title_content(getMakler.get_general_information()[0], getMakler.get_content())
             print("a inserat titlul si contentul")
             pasteMakler.complete_price(getMakler.get_post_price_currency()[0], getMakler.get_post_price_currency()[1])

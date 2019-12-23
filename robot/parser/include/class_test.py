@@ -5,6 +5,7 @@ from time import sleep as sleep
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+import re
 
 
 class getMakler:
@@ -32,7 +33,8 @@ class getMakler:
             post_price = div_header[0].find('div', attrs={'class': 'item_title_price'}).text
             currency = post_price[-1:]
             post_price = post_price[:-1].strip()
-            post_price = post_price.replace(' ', '')
+            post_price = post_price.replace(' ', '').lower()
+            post_price = re.sub(r'[a-z]+', '', post_price, re.I)
             return post_price, currency
         except:
             post_price = None
@@ -106,6 +108,10 @@ class getMakler:
                 return True
         except:
             return False
+
+    def get_period(self):
+        perioada = self.soup.find('ul', attrs={'class': 'itemtable'}).find("div", attrs={'class': 'values'}).text.strip()
+        return perioada
 
 
 class pasteMakler:
@@ -225,6 +231,11 @@ class pasteMakler:
 
         else:
             pass
+
+    def set_period(self, period):
+        if period != None and period != '':
+            element = self.driver.find_element_by_class_name('newAdForm_fieldBox')
+            element.find_element_by_xpath("//select[@name='field_432']/option[text()='"+ period +"']").click()
 
 
     def paste_post(self, phone):
