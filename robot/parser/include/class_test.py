@@ -227,8 +227,8 @@ class pasteMakler:
             pass
 
 
-    def paste_post(self):
-        self.driver.find_element_by_id('phone-37368035704').click()
+    def paste_post(self, phone):
+        self.driver.find_element_by_id(phone).click()
         self.driver.find_element_by_class_name('saveBtn').click()
 
     def quit_driver(self):
