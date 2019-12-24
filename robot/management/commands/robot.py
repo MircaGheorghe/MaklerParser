@@ -50,7 +50,6 @@ class Command(BaseCommand):
             pasteMakler.check_ipoteca(getMakler.get_ipoteca())
             print("A verificat de ipoteca")
 
-            print(getMakler.get_images())
             pasteMakler.upload_images(getMakler.get_images())
             print("A postat imaginile")
 

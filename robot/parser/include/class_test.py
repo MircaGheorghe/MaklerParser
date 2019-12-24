@@ -70,7 +70,6 @@ class getMakler:
 
             i = 0
             for a in div_image.find_all("a"):
-                print(a['href'])
                 urllib.request.urlretrieve(a['href'], "img/{}.jpg".format(str(i)))
                 i += 1
             return i
@@ -262,14 +261,28 @@ class pasteMakler:
             pass
 
     def set_proposal(self, proposal):
+        arr = []
         try:
+            arr = proposal.split(', ')
+        except:
+            arr.append(proposal)
+
+        if len(arr) > 1:
             div = self.driver.find_element_by_id('kind')
-            if proposal == "vând":
+            if arr[0] == "vând":
                 div.find_elements_by_tag_name('label')[0].click()
+                div = self.driver.find_element_by_id('newAdForm_isForChangeBox')
+                div.find_element_by_tag_name('label').click()
                 return
             div.find_elements_by_tag_name('label')[1].click()
-        except:
-            pass
+            div = self.driver.find_element_by_id('newAdForm_isForChangeBox')
+            div.find_element_by_tag_name('label').click()
+            return
+        div = self.driver.find_element_by_id('kind')
+        if proposal == "vând":
+            div.find_elements_by_tag_name('label')[0].click()
+            return
+        div.find_elements_by_tag_name('label')[1].click()
 
 
     def paste_post(self, phone):

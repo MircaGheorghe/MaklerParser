@@ -15,5 +15,5 @@ class Link(models.Model):
     post_date = models.DateTimeField(null = True, blank = True)
 
 class Category(models.Model):
-    content = models.CharField(max_length=100)
+    content = models.CharField(max_length=250)
 
