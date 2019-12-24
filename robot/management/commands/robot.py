@@ -18,43 +18,47 @@ class Command(BaseCommand):
         }
 
         start = time.time()
-        print("ceva")
         for cat in Category.objects.all():
-            print("categoria")
             links = func.get_valid_links(cat)
-            print("am verificat link-ul")
+            print("Au fost verificate link-urile")
             if not links:
-                print("son")
+                print("Nu sunt link-uri care au trecut validarea")
                 continue
             l = links[0].account
             if not func.get_last_phone(cat.content):
+                print("Ultima postare este a noastra, sau numarul nu a trecut validarea")
                 continue
-            print("a trecut verificarea, poate fi postat")
+            print("Link-ul a trecut validarea, poate fi postat")
             pasteMakler = test.pasteMakler(l.username, l.password)
             print("S-a logat")
             getMakler = test.getMakler(links[0].content, headers)
-            print("a luat informaatia")
+            print("A luat informaatia")
             pasteMakler.change_location('https://makler.md/md/an/web/add')
-            print("Sa schimbat pe sectiunea postari")
+            print("S-a schimbat pe sectiunea postari")
             pasteMakler.choose_category(getMakler.get_categories())
             print("A ales categoria")
             pasteMakler.complete_adress(getMakler.get_general_information()[1], getMakler.get_district(), getMakler.get_region())
-            print("a ales regiunea")
+            print("A ales regiunea")
             pasteMakler.set_period(getMakler.get_period())
-            print("a setat perioada")
+            print("A setat perioada")
             pasteMakler.complete_title_content(getMakler.get_general_information()[0], getMakler.get_content())
-            print("a inserat titlul si contentul")
+            print("A inserat titlul si contentul")
+            pasteMakler.set_proposal(getMakler.get_type_proposal())
+            print("A setat tipul propunerii")
             pasteMakler.complete_price(getMakler.get_post_price_currency()[0], getMakler.get_post_price_currency()[1])
-            print("a postat pretul si valuta")
+            print("A postat pretul si valuta")
             pasteMakler.check_ipoteca(getMakler.get_ipoteca())
-            print("a verificat de ipoteca")
+            print("A verificat de ipoteca")
+
+            print(getMakler.get_images())
             pasteMakler.upload_images(getMakler.get_images())
-            print("a postat imaginile")
+            print("A postat imaginile")
+
             pasteMakler.complete_specification(getMakler.specifications)
-            print("a completat specificatiile")
+            print("A completat specificatiile")
             phone = "phone-" + l.username
             pasteMakler.paste_post(phone)
-            print("a postat")
+            print("A postat")
             pasteMakler.quit_driver()
 
             end = time.time()

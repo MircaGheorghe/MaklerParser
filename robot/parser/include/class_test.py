@@ -47,6 +47,7 @@ class getMakler:
         if self.city in city_transnistria:
             region = "Transnistria"
         return region
+
     def get_content(self):
         content = self.soup.find('div', attrs={'class', 'ittext'}).text.strip()
         content = content.replace('[email protected]', '')
@@ -69,12 +70,13 @@ class getMakler:
 
             i = 0
             for a in div_image.find_all("a"):
+                print(a['href'])
                 urllib.request.urlretrieve(a['href'], "img/{}.jpg".format(str(i)))
                 i += 1
-                img_count = i
-            return img_count
+            return i
         except:
             return False
+
 
     def get_specification(self):
         try:
@@ -91,37 +93,52 @@ class getMakler:
 
 
     def get_district(self):
-        sectorul = self.specifications['Sectorul']
-        return sectorul
-
-    def get_ipoteca(self):
-        uls = self.soup.find_all('ul', attrs={'class': 'itemtable'})
-        data = {}
-        for ul in uls:
-            for li in ul.find_all('li'):
-                title = li.find("div", attrs={"class": "fields"}).text.strip()
-                value = li.find("div", attrs={"class": "values"}).text.strip()
-                data[title] = value
-
         try:
-            if data['Ipoteca'] =='✔':
-                return True
+            sectorul = self.specifications['Sectorul']
+            return sectorul
         except:
             return False
 
+    def get_ipoteca(self):
+        try:
+            uls = self.soup.find_all('ul', attrs={'class': 'itemtable'})
+            data = {}
+            for ul in uls:
+                for li in ul.find_all('li'):
+                    title = li.find("div", attrs={"class": "fields"}).text.strip()
+                    value = li.find("div", attrs={"class": "values"}).text.strip()
+                    data[title] = value
+
+            if data['Ipoteca'] =='✔':
+                    return True
+            return False
+        except:
+            pass
+
     def get_period(self):
-        perioada = self.soup.find('ul', attrs={'class': 'itemtable'}).find("div", attrs={'class': 'values'}).text.strip()
-        return perioada
+        try:
+            perioada = self.soup.find('ul', attrs={'class': 'itemtable'}).find("div", attrs={'class': 'values'}).text.strip()
+            return perioada
+        except:
+            pass
+
+    def get_type_proposal(self):
+        try:
+            ul = self.soup.find('ul', attrs={'class': 'itemtable'})
+            type_prop = ul.find('div', attrs={'class': 'values'}).text.strip()
+            return type_prop
+        except:
+            pass
+
 
 
 class pasteMakler:
     def __init__(self, user_name, password):
         chrome_options = Options()
+        chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--disable-dev-shm-usage')
-        self.driver = webdriver.Chrome("/usr/bin/chromedriver", options=chrome_options)
+        self.driver = webdriver.Chrome("C:\Program Files (x86)\Google\Chrome\Application\chromedriver")
         self.driver.get("https://makler.md/md/")
         self.driver.implicitly_wait(3)
         self.driver.find_element_by_id('logInDiv').click()
@@ -142,9 +159,12 @@ class pasteMakler:
 
     def complete_adress(self, city, district, region):
         sleep(1)
-        self.driver.find_element_by_xpath("//select[@id='region']/option[text()='"+ region +"']").click()
-        self.driver.find_element_by_xpath("//select[@id='city']/option[text()='"+ city +"']").click()
-        self.driver.find_element_by_xpath("//select[@id='district']/option[text()='"+ district +"']").click()
+        try:
+            self.driver.find_element_by_xpath("//select[@id='region']/option[text()='"+ region +"']").click()
+            self.driver.find_element_by_xpath("//select[@id='city']/option[text()='"+ city +"']").click()
+            self.driver.find_element_by_xpath("//select[@id='district']/option[text()='"+ district +"']").click()
+        except:
+            pass
 
     def check_ipoteca(self, atribute):
         if atribute == True:
@@ -187,7 +207,7 @@ class pasteMakler:
 
             for i in range(nr_img):
                 elm = self.driver.find_element_by_xpath("//input[@type='file']")
-                elm.send_keys("C://Users/Gheorghe/OneDrive/Documents/Python/work/img/"+ str(i) +".jpg")
+                elm.send_keys("C:/Users/Gheorghe/OneDrive/Documents/Python/maklerParser/robot/parser/include/img"+ str(i) +".jpg")
         else:
             pass
 
@@ -233,14 +253,30 @@ class pasteMakler:
             pass
 
     def set_period(self, period):
-        if period != None and period != '':
-            element = self.driver.find_element_by_class_name('newAdForm_fieldBox')
-            element.find_element_by_xpath("//select[@name='field_432']/option[text()='"+ period +"']").click()
+        try:
+            if period != None and period != '':
+                element = self.driver.find_element_by_class_name('newAdForm_fieldBox')
+                element.find_element_by_xpath("//select[@name='field_432']/option[text()='"+ period +"']").click()
+        except:
+            pass
+
+    def set_proposal(self, proposal):
+        try:
+            div = self.driver.find_element_by_id('kind')
+            if proposal == "vând":
+                div.find_elements_by_tag_name('label')[0].click()
+                return
+            div.find_elements_by_tag_name('label')[1].click()
+        except:
+            pass
 
 
     def paste_post(self, phone):
-        self.driver.find_element_by_id(phone).click()
-        self.driver.find_element_by_class_name('saveBtn').click()
+        try:
+            self.driver.find_element_by_id(phone).click()
+            self.driver.find_element_by_class_name('saveBtn').click()
+        except:
+            pass
 
     def quit_driver(self):
         self.driver.quit()
