@@ -20,7 +20,7 @@ def get_last_phone(cat):
         phone = article.find('div', 'ls-detail_anData').find_all('span')[-1].text
         phone_array.append(phone)
         first = phone_array[0].replace('-', '')
-    if not len(first.split(',')) > 1: #Daca este un singur numar, merge mai departe
+    if not len(first.split(',')) > 3: #Daca este un singur numar, merge mai departe
         if Account.objects.filter(username__contains=first).exists(): #Daca numarul exista in baza de date, returna false
             return False
         return True
