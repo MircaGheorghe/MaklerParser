@@ -6,6 +6,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import re
+from datetime import datetime
 
 
 class getMakler:
@@ -165,21 +166,24 @@ class pasteMakler:
             self.driver.find_element_by_xpath("//select[@id='city']/option[text()='"+ city +"']").click()
             self.driver.find_element_by_xpath("//select[@id='district']/option[text()='"+ district +"']").click()
         except:
-            pass
+            now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+            self.driver.get_screenshot_as_file('screenshots/screenshot-%s.png' % now)
 
     def check_ipoteca(self, atribute):
-        if atribute == True:
+        try:
             self.driver.find_element_by_class_name('newAdForm_checkboxField').click()
             self.driver.find_element_by_id('approve-conditions').click()
-        else:
-            pass
+        except:
+            now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+            self.driver.get_screenshot_as_file('screenshots/screenshot-%s.png' % now)
 
     def complete_title_content(self, post_title, content):
         try:
             self.driver.find_element_by_id("editorName").send_keys(post_title)
             self.driver.find_element_by_id("editorText").send_keys(content)
         except:
-            pass
+            now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+            self.driver.get_screenshot_as_file('screenshots/screenshot-%s.png' % now)
 
 
     def complete_price(self, post_price, currency):
@@ -201,7 +205,8 @@ class pasteMakler:
                     if element.text == curency_tab[currency]:
                         element.click()
         else:
-            pass
+            now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+            self.driver.get_screenshot_as_file('screenshots/screenshot-%s.png' % now)
 
 
     def upload_images(self, nr_img):
@@ -213,7 +218,8 @@ class pasteMakler:
                 elm = self.driver.find_element_by_xpath("//input[@type='file']")
                 elm.send_keys("C:/Users/Gheorghe/OneDrive/Documents/Python/maklerParser/robot/parser/include/img"+ str(i) +".jpg")
         else:
-            pass
+            now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+            self.driver.get_screenshot_as_file('screenshots/screenshot-%s.png' % now)
 
 
     def complete_specification(self, specifications):
@@ -254,7 +260,8 @@ class pasteMakler:
                                         li.find_element_by_xpath('//label[contains(text(), "' + elem.strip() + '")]').click()
 
         else:
-            pass
+            now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+            self.driver.get_screenshot_as_file('screenshots/screenshot-%s.png' % now)
 
     def set_period(self, period):
         try:
@@ -262,7 +269,8 @@ class pasteMakler:
                 element = self.driver.find_element_by_class_name('newAdForm_fieldBox')
                 element.find_element_by_xpath("//select[@name='field_432']/option[text()='"+ period +"']").click()
         except:
-            pass
+            now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+            self.driver.get_screenshot_as_file('screenshots/screenshot-%s.png' % now)
 
     def set_proposal(self, proposal):
         arr = []
@@ -294,7 +302,8 @@ class pasteMakler:
             self.driver.find_element_by_id(phone).click()
             self.driver.find_element_by_class_name('saveBtn').click()
         except:
-            pass
+            now = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+            self.driver.get_screenshot_as_file('screenshots/screenshot-%s.png' % now)
 
     def quit_driver(self):
         self.driver.quit()
