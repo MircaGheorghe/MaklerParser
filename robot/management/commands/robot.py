@@ -16,6 +16,7 @@ class Command(BaseCommand):
             'accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
             'user-agent' : 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'
         }
+        f = open("demofile2.txt", "a")
 
         start = time.time()
         for cat in Category.objects.all():
@@ -25,7 +26,7 @@ class Command(BaseCommand):
                 print("Nu sunt link-uri care au trecut validarea")
                 continue
             l = links[0].account
-            print (links[0].content)
+            f.write(links[0].content)
             if not func.get_last_phone(cat.content):
                 continue
             print("Link-ul a trecut validarea, poate fi postat")
@@ -61,3 +62,4 @@ class Command(BaseCommand):
             end = time.time()
             result = end - start
             print(result)
+            f.close()
