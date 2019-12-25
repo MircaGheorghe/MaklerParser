@@ -4,7 +4,6 @@ from robot.models import *
 from robot.parser.utils import functions as func
 import requests
 import time
-import datetime
 
 
 
@@ -26,7 +25,7 @@ class Command(BaseCommand):
                 print("Nu sunt link-uri care au trecut validarea")
                 continue
             l = links[0].account
-            f.write(str(links[0].content) + '\n')
+            f.write(str(links[0].content) + str(time.time()) +'\n')
             if not func.get_last_phone(cat.content):
                 continue
             print("Link-ul a trecut validarea, poate fi postat")
