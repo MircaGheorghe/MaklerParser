@@ -49,10 +49,8 @@ class Command(BaseCommand):
             print("A postat pretul si valuta")
             pasteMakler.check_ipoteca(getMakler.get_ipoteca())
             print("A verificat de ipoteca")
-
             pasteMakler.upload_images(getMakler.get_images())
             print("A postat imaginile")
-
             pasteMakler.complete_specification(getMakler.specifications)
             print("A completat specificatiile")
             phone = "phone-" + l.username

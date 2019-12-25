@@ -49,9 +49,11 @@ class getMakler:
         return region
 
     def get_content(self):
-        content = self.soup.find('div', attrs={'class', 'ittext'}).text.strip()
+        content = self.soup.find('div', attrs={'id': 'anText'}).text
         content = content.replace('[email protected]', '')
-        return content
+        n_c = '\n'.join([row.strip() for row in content.split('\n')])
+        print(n_c)
+        return n_c
 
     def get_categories(self):
         categories = self.soup.find_all('li', attrs={'class': 'pl'})
@@ -174,8 +176,11 @@ class pasteMakler:
             pass
 
     def complete_title_content(self, post_title, content):
-        self.driver.find_element_by_id("editorName").send_keys(post_title)
-        self.driver.find_element_by_id("editorText").send_keys(content)
+        try:
+            self.driver.find_element_by_id("editorName").send_keys(post_title)
+            self.driver.find_element_by_id("editorText").send_keys(content)
+        except:
+            pass
 
 
     def complete_price(self, post_price, currency):
@@ -292,6 +297,6 @@ class pasteMakler:
         except:
             pass
 
-    def quit_driver(self):
-        self.driver.quit()
+    # def quit_driver(self):
+    #     self.driver.quit()
 
