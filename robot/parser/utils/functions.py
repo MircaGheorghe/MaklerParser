@@ -23,6 +23,6 @@ def get_last_phone(cat):
     print(first)
     if not len(first.split(',')) > 1: #Daca este un singur numar, merge mai departe
         if Account.objects.filter(username__contains=first).exists(): #Daca numarul exista in baza de date,
-            return False
+            return "Am postat acest anunt deja"
         return True
-    return False
+    return "Exista mai mult de un telefon"

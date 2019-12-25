@@ -26,7 +26,6 @@ class Command(BaseCommand):
                 continue
             l = links[0].account
             if not func.get_last_phone(cat.content):
-                print("Ultima postare este a noastra, sau numarul nu a trecut validarea")
                 continue
             print("Link-ul a trecut validarea, poate fi postat")
             pasteMakler = test.pasteMakler(l.username, l.password)
