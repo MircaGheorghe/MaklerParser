@@ -52,7 +52,6 @@ class getMakler:
         content = self.soup.find('div', attrs={'id': 'anText'}).text
         content = content.replace('[email protected]', '')
         n_c = '\n'.join([row.strip() for row in content.split('\n')])
-        print(n_c)
         return n_c
 
     def get_categories(self):
@@ -297,6 +296,6 @@ class pasteMakler:
         except:
             pass
 
-    # def quit_driver(self):
-    #     self.driver.quit()
+    def quit_driver(self):
+        self.driver.quit()
 
