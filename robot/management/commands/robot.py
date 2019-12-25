@@ -25,6 +25,7 @@ class Command(BaseCommand):
                 print("Nu sunt link-uri care au trecut validarea")
                 continue
             l = links[0].account
+            print l[0].content
             if not func.get_last_phone(cat.content):
                 continue
             print("Link-ul a trecut validarea, poate fi postat")

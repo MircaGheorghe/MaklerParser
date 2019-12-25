@@ -16,6 +16,7 @@ def get_valid_links(cat):
 def get_last_phone(cat):
     phone_array = []
     soup = bs(requests.get(cat).content, 'html.parser')
+    print(soup)
     for article in soup.find('main', id = 'mainAnList').find('noscript').find('div', 'ls-detail').find_all('article'):
         phone = article.find('div', 'ls-detail_anData').find_all('span')[-1].text
         phone_array.append(phone)
