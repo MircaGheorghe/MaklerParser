@@ -16,4 +16,3 @@ class Link(models.Model):
 
 class Category(models.Model):
     content = models.CharField(max_length=400)
-
