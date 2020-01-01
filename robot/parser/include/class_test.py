@@ -30,18 +30,22 @@ class getMakler:
         return post_title, self.city, phone
 
     def get_post_price_currency(self):
-        div_header = self.soup.find_all('div', attrs={'class': 'title clrfix'})
         try:
+            div_header = self.soup.find_all('div', attrs={'class': 'title clrfix'})
             post_price = div_header[0].find('div', attrs={'class': 'item_title_price'}).text
-            currency = post_price[-1:]
+            total_currency = ['$', '₴','€', 'Lei']
+            for val in total_currency:
+                if val in post_price:
+                    currency = val
             post_price = post_price[:-1].strip()
             post_price = post_price.replace(' ', '').lower()
-            post_price = re.sub(r'[a-z]+', '', post_price, re.I)
+            post_price = re.sub(r'[a-zа-я]+', '', post_price, re.I)
             return post_price, currency
         except:
             post_price = None
             currency = None
             return post_price, currency
+
 
     def get_region(self):
         city_transnistria = ['Tiraspol', 'Bender', 'Râbnița', 'Blijinii Hutor', 'Grigoriopol', 'Dnestrovsc','Dubăsari', 'Camenca', 'Maiac', 'Tiraspolul Nou', 'Parcani', 'Dnestrovsc','Первомайск', 'Slobozia','Sucleia','Ternovca']
@@ -190,14 +194,15 @@ class pasteMakler:
                 '$':'USD',
                 '₴':'UAH',
                 '€':'EUR',
-                'lei':'MDL'
+                'Lei':'MDL'
             }
             sleep(1)
             if currency in curency_tab.keys():
-                get_currency_div = self.driver.find_element_by_class_name('newAdForm_radioBoxButtons')
+                get_currency_div = self.driver.find_elements_by_class_name('newAdForm_radioBoxButtons')[1]
                 elements = get_currency_div.find_elements_by_tag_name('label')
                 for element in elements:
                     if element.text == curency_tab[currency]:
+                        print("baaa")
                         element.click()
         else:
             self.driver.get_screenshot_as_file('screenshots/valuta.png')
