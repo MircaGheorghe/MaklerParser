@@ -17,7 +17,10 @@ def get_last_phone(cat):
     phone_array = []
     soup = bs(requests.get(cat).content, 'html.parser')
     for article in soup.find('main', id = 'mainAnList').find('noscript').find('div', 'ls-detail').find_all('article'):
-        phone = article.find('div', 'ls-detail_anData').find_all('span')[-1].text
+        try:
+            phone = article.find('div', 'ls-detail_anData').find_all('span')[-1].text
+        except:
+            pass
         phone_array.append(phone)
         first = phone_array[0].replace('-', '')
     print(first)

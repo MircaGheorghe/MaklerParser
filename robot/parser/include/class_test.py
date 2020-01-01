@@ -7,6 +7,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
 import re
 from datetime import datetime
+import os
 
 
 class getMakler:
@@ -64,7 +65,6 @@ class getMakler:
 
 
     def get_images(self): #Salveaza iamginile in folder si returneaza numarul de imagini
-        try:
             div_image = self.soup.find('div', id = "anItemData").find('div', attrs={'class': 'itmedia'})
             opener = urllib.request.build_opener()
             opener.addheaders = [('User-agent', 'Mozilla/5.0')]
@@ -75,8 +75,6 @@ class getMakler:
                 urllib.request.urlretrieve(a['href'], "img/{}.jpg".format(str(i)))
                 i += 1
             return i
-        except:
-            return False
 
 
     def get_specification(self):
@@ -138,7 +136,9 @@ class pasteMakler:
         chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-gpu')
-        self.driver = webdriver.Chrome("C:\Program Files (x86)\Google\Chrome\Application\chromedriver")
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        self.driver = webdriver.Chrome("/usr/bin/chromedriver", options=chrome_options)
         self.driver.get("https://makler.md/md/")
         self.driver.implicitly_wait(3)
         self.driver.find_element_by_id('logInDiv').click()
@@ -210,7 +210,9 @@ class pasteMakler:
 
             for i in range(nr_img):
                 elm = self.driver.find_element_by_xpath("//input[@type='file']")
-                elm.send_keys("C:/Users/Gheorghe/OneDrive/Documents/Python/maklerParser/robot/parser/include/img"+ str(i) +".jpg")
+                dirname = os.path.dirname(__file__)
+                dirname = os.path.abspath(os.path.join(dirname, '../../../'))
+                elm.send_keys("{}/img/{}.jpg".format(dirname, i))
         else:
             self.driver.get_screenshot_as_file('screenshots/imaginile.png')
 
