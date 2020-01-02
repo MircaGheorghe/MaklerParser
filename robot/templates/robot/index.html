@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'robot/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'robot/styles.css' %}">
     <title>Document</title>
 </head>
 <body>
@@ -14,8 +14,34 @@
         {% if condition.content == False %}
             <p class="status">Robotul este <span class="spec">dezactivat</span></p>
         {% else %}
-            <p class="status">Robotul este <span class="spec">activ</span></p>
+            <p class="status">Robotul este <span class="spec">activat</span></p>
         {% endif %}
+    </div>
+
+    <div class="database">
+        <div class="account">
+        <h2>Accounts</h2>
+            <div class="table-wrapper">
+                <table class="fl-table">
+                    <thead>
+                    <tr>
+                        <th>Author</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ account.author }}</td>
+                        <td>{{ account.username }}</td>
+                        <td>{{ account.password }}</td>
+                    </tr>
+                    <tbody>
+                </table>
+            </div>
+        </div>
+        <div class="category"></div>
+        <div class="link"></div>
     </div>
 </body>
 </html>

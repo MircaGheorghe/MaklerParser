@@ -18,7 +18,7 @@ class Command(BaseCommand):
             'accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
             'user-agent' : 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'
         }
-        f = open("/home/makler-publication/demofile2.txt", "w")
+        f = open("demofile2.txt", "w")
         start = time.time()
         for cat in Category.objects.all():
             cont = mustPosted.objects.last()
@@ -57,8 +57,14 @@ class Command(BaseCommand):
                 print("A postat imaginile")
                 pasteMakler.complete_specification(getMakler.specifications)
                 print("A completat specificatiile")
+
+                rez = False
+                while rez == False:
+                    rez = pasteMakler.get_last_load_image()
+
                 phone = "phone-" + l.username
                 pasteMakler.paste_post(phone)
+                pasteMakler.pay_for_post()
                 print("A postat")
                 pasteMakler.quit_driver()
 

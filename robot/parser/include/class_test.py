@@ -48,7 +48,7 @@ class getMakler:
 
 
     def get_region(self):
-        city_transnistria = ['Tiraspol', 'Bender', 'Râbnița', 'Blijinii Hutor', 'Grigoriopol', 'Dnestrovsc','Dubăsari', 'Camenca', 'Maiac', 'Tiraspolul Nou', 'Parcani', 'Dnestrovsc','Первомайск', 'Slobozia','Sucleia','Ternovca']
+        city_transnistria = ['Tiraspol', 'Bender', 'Râbniţa', 'Blijinii Hutor', 'Grigoriopol', 'Dnestrovsc','Dubăsari', 'Camenca', 'Maiac', 'Tiraspolul Nou', 'Parcani', 'Dnestrovsc','Первомайск', 'Slobozia','Sucleia','Ternovca']
         region = "Moldova"
         if self.city in city_transnistria:
             region = "Transnistria"
@@ -140,9 +140,7 @@ class pasteMakler:
         chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--disable-dev-shm-usage')
-        self.driver = webdriver.Chrome("/usr/bin/chromedriver", options=chrome_options)
+        self.driver = webdriver.Chrome("C:\Program Files (x86)\Google\Chrome\Application\chromedriver")
         self.driver.get("https://makler.md/md/")
         self.driver.implicitly_wait(3)
         self.driver.find_element_by_id('logInDiv').click()
@@ -202,7 +200,6 @@ class pasteMakler:
                 elements = get_currency_div.find_elements_by_tag_name('label')
                 for element in elements:
                     if element.text == curency_tab[currency]:
-                        print("baaa")
                         element.click()
         else:
             self.driver.get_screenshot_as_file('screenshots/valuta.png')
@@ -294,11 +291,27 @@ class pasteMakler:
             return
         div.find_elements_by_tag_name('label')[1].click()
 
+    def get_last_load_image(self):
+        element = self.driver.find_element_by_id('files_list')
+        img = element.find_elements_by_tag_name('li')[0].find_element_by_tag_name('label').find_element_by_tag_name("span").get_attribute("style")
+        if img == "display: none;":
+            return True
+        return False
+
+
 
     def paste_post(self, phone):
         try:
             self.driver.find_element_by_id(phone).click()
             self.driver.find_element_by_class_name('saveBtn').click()
+        except:
+            self.driver.get_screenshot_as_file('screenshots/postare.png')
+
+    def pay_for_post(self):
+        try:
+            div = self.driver.find_element_by_class_name('buttons')
+            div.find_elements_by_tag_name('a')[0].click()
+            self.driver.get_screenshot_as_file('screenshots/cu_plata.png')
         except:
             self.driver.get_screenshot_as_file('screenshots/postare.png')
 

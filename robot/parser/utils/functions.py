@@ -29,3 +29,4 @@ def get_last_phone(cat):
             return "Am postat acest anunt deja"
         return True
     return "Exista mai mult de un telefon"
+
