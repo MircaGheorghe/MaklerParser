@@ -137,6 +137,7 @@ class getMakler:
 
 class pasteMakler:
     def __init__(self, user_name, password):
+        chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-gpu')
         chrome_options.add_argument('--no-sandbox')
