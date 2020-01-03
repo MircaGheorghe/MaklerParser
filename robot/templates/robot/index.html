@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load robot_extras %}
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'robot/styles.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'robot/css/styles.css' %}">
+    <script src="{% static 'robot/scripts/script.js' %}"></script>
     <title>Document</title>
 </head>
 <body>
@@ -17,31 +19,41 @@
             <p class="status">Robotul este <span class="spec">activat</span></p>
         {% endif %}
     </div>
-
-    <div class="database">
-        <div class="account">
-        <h2>Accounts</h2>
-            <div class="table-wrapper">
-                <table class="fl-table">
-                    <thead>
-                    <tr>
-                        <th>Author</th>
-                        <th>Username</th>
-                        <th>Password</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>{{ account.author }}</td>
-                        <td>{{ account.username }}</td>
-                        <td>{{ account.password }}</td>
-                    </tr>
-                    <tbody>
-                </table>
-            </div>
-        </div>
-        <div class="category"></div>
-        <div class="link"></div>
-    </div>
+    <div class="limiter">
+		<div class="container-table100">
+			<div class="wrap-table100">
+				<div class="table100">
+					<table>
+                        <thead>
+                            <tr class="table100-head">
+                                <th class="column1">link</th>
+                                <th class="column2">login</th>
+                                <th class="column3">cu plata</th>
+                                <th class="column4">data postarii</th>
+                            </tr>
+                        </thead>
+                    {% for cat in category %}
+                        <tbody>
+                            <tr class="table100-head">
+                                <th class="column1 cat">{{ cat.content }}</th>
+                                <th class="column2 cat" collspan="2">{{ links|get_username:cat}}</th>
+                                <th class="column3 cat"></th>
+                                <th class="column4 cat"></th>
+                            </tr>
+                        {% for link in links|in_category:cat %}
+                            <tr>
+                                <td class="column1">{{ link.content }}</td>
+                                <td class="column2" collspan="2"></td>
+                                <td class="column3">{{ link.payment }}</td>
+                                <td class="column4">{{ link.post_date }}</td>
+                            </tr>
+                        </tbody>
+                        {% endfor %}
+                    {% endfor %}
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

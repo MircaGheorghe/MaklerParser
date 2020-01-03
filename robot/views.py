@@ -5,7 +5,12 @@ from robot.models import *
 
 # Create your views here.
 def index(request):
-    return render(request, 'robot/index.html', {'condition': mustPosted.objects.last(), 'account': Account.objects.last()})
+    return render(request, 'robot/index.html', {
+        'condition': mustPosted.objects.last(),
+        'account': Account.objects.all(),
+        'category': Category.objects.all(),
+        'links':Link.objects.all()
+        })
 
 
 def start_parser(request):
