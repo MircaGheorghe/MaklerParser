@@ -11,7 +11,13 @@ def get_valid_links(cat):
     links = Link.objects.filter(category=cat, post_date__lt = date_24h)
     if links:
         return links
-    return Link.objects.filter(category=cat, payment = True)
+    if Link.objects.filter(category=cat, payment=True, posted=False).exists():
+        return Link.objects.filter(category=cat, payment = True, posted=False)
+    else:
+        Link.objects.update(posted=False)
+    return links
+
+
 
 def get_last_phone(cat):
     phone_array = []

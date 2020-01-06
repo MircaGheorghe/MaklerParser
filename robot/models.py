@@ -13,7 +13,8 @@ class Link(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE, default=1)
     content = models.TextField()
     payment = models.BooleanField(default=False)
-    post_date = models.DateTimeField(null = True, blank = True, default=datetime.now())
+    posted = models.BooleanField(default=False)
+    post_date = models.DateTimeField(null = True, blank = True)
 
 class Category(models.Model):
     content = models.CharField(max_length=400)
