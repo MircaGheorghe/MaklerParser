@@ -8,17 +8,78 @@
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'robot/css/styles.css' %}">
     <script src="{% static 'robot/scripts/script.js' %}"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script>
+    $( document ).ready(function() {
+        $("#field").change(function(){
+            var id = $(this).find("option:selected").attr("id");
+            switch (id){
+                case "acc":
+                $(function(){
+                    $('.modal-wrapper').toggleClass('open');
+                    $('.page-wrapper').toggleClass('blur-it');
+                    return false;
+                }); break;
+                case "cat":
+                $(function(){
+                    $('.modal-wrapper2').toggleClass('open');
+                    $('.page-wrapper').toggleClass('blur-it');
+                    return false;
+                }); break;
+                case "link":
+                $(function(){
+                    $('.modal-wrapper3').toggleClass('open');
+                    $('.page-wrapper').toggleClass('blur-it');
+                    return false;
+                });
+            }
+        });
+    });
+
+      $( document ).ready(function() {
+        $('.trigger').on('click', function() {
+           $('.modal-wrapper').toggleClass('open');
+          $('.page-wrapper').toggleClass('blur-it');
+           return false;
+        });
+      });$( document ).ready(function() {
+        $('.trigger2').on('click', function() {
+           $('.modal-wrapper2').toggleClass('open');
+          $('.page-wrapper2').toggleClass('blur-it');
+           return false;
+        });
+      });$( document ).ready(function() {
+        $('.trigger3').on('click', function() {
+           $('.modal-wrapper3').toggleClass('open');
+          $('.page-wrapper3').toggleClass('blur-it');
+           return false;
+        });
+      });
+    </script>
     <title>Document</title>
 </head>
 <body>
-    <div class="container">
-        <a href={% url 'start_parser' %} class="start_link">Modifica</a>
-        {% if condition.content == False %}
-            <p class="status">Robotul este <span class="spec">dezactivat</span></p>
-        {% else %}
-            <p class="status">Robotul este <span class="spec">activat</span></p>
-        {% endif %}
+    <div class="top_container">
+        <div class="activate">
+            <a href={% url 'start_parser' %} class="start_link">Modifica</a>
+            {% if condition.content == False %}
+                <p class="status">Bot-ul este <span class="spec">dezactivat</span></p>
+            {% else %}
+                <p class="status">Bot-ul este <span class="spec">activat</span></p>
+            {% endif %}
+        </div>
+        <div class="add_content">
+            <p>Adauga: &nbsp&nbsp&nbsp&nbsp</p>
+            <select name="toDataBase" id="field">
+                <option style="display: none;">Alege</option>
+                <option value="account" id="acc">Categorie</option>
+                <option value="ctegory" id="cat">Cont</option>
+                <option value="link" id="link">Link</option>
+            </select>
+        </div>
     </div>
+
+
     <div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
@@ -54,6 +115,74 @@
 				</div>
 			</div>
 		</div>
-	</div>
+    </div>
+
+  <div class="modal-wrapper">
+    <div class="modal">
+      <div class="head">
+        <a class="btn-close trigger" href="#">x</a>
+      </div>
+      <div class="content">
+        <div class="container_form">
+            <form action="{% url 'set_category' %}" method="post" autocomplete="off"> {% csrf_token %}
+                <input type="text" name="cat" class="category" placeholder="link-ul categoriei aici" required>
+                <input type="submit" value="Trimite" class="submit_button">
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-wrapper2">
+    <div class="modal">
+      <div class="head">
+        <a class="btn-close trigger2" href="#">x</a>
+      </div>
+      <div class="content">
+        <div class="container_form">
+            <form action="{% url 'set_account' %}" method="post" autocomplete="off"> {% csrf_token %}
+                <input type="text" name="login" class="category" placeholder="login" required>
+                <input type="text" name="pass" class="category" placeholder="parola" required>
+                <select name="author" id="" required>
+                    <option value="" style="display: none;">Autor</option>
+                    {% for aut in account %}
+                    <option value="{{ aut.author_id }}">{{aut.author}}</option>
+                    {%endfor%}
+                </select>
+                <input type="submit" value="Trimite" class="submit_button">
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-wrapper3">
+    <div class="modal">
+      <div class="head">
+        <a class="btn-close trigger3" href="#">x</a>
+      </div>
+      <div class="content">
+        <div class="container_form">
+            <form action="{% url 'set_link' %}" method="post" autocomplete="off"> {% csrf_token %}
+                <input type="text" name="link" class="category" placeholder="link-ul aici" required>
+                <select name="cont" id="" required>
+                    <option value="" style="display: none;">Cont</option>
+                    {% for aut in account %}
+                    <option value="{{aut.id}}">{{aut.username}}</option>
+                    {%endfor%}
+                </select>
+                <select name="category" id="" required>
+                    <option value="" style="display: none;">Categoria</option>
+                    {% for cat in category %}
+                    <option value="{{cat.id}}">{{cat}}</option>
+                    {%endfor%}
+                </select><br><br>
+                <span>Cu plata: <input type="checkbox" name="payment" style="display: inline;"></span>
+                <input type="submit" value="Trimite" class="submit_button">
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </body>
 </html>

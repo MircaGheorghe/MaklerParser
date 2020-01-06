@@ -140,9 +140,7 @@ class pasteMakler:
         chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--disable-dev-shm-usage')
-        self.driver = webdriver.Chrome("/usr/bin/chromedriver", options=chrome_options)
+        self.driver = webdriver.Chrome("C:\Program Files (x86)\Google\Chrome\Application\chromedriver")
         self.driver.get("https://makler.md/md/")
         self.driver.implicitly_wait(3)
         self.driver.find_element_by_id('logInDiv').click()
@@ -301,22 +299,16 @@ class pasteMakler:
         return False
 
 
-
     def paste_post(self, phone):
         try:
             self.driver.find_element_by_id(phone).click()
             self.driver.find_element_by_class_name('saveBtn').click()
+            print("dsadasd")
+            self.driver.find_element_by_id('confirm_dialog').find_element_by_class_name('buttons').find_element_by_tag_name(a).click()
+            print("dsaddncvnbncvbncvbn")
         except:
             self.driver.get_screenshot_as_file('screenshots/postare.png')
 
-    def pay_for_post(self):
-        try:
-            div = self.driver.find_element_by_class_name('buttons')
-            div.find_elements_by_tag_name('a')[0].click()
-            self.driver.get_screenshot_as_file('screenshots/cu_plata.png')
-        except:
-            self.driver.get_screenshot_as_file('screenshots/postare.png')
-
-    def quit_driver(self):
-        self.driver.quit()
+    # def quit_driver(self):
+    #     self.driver.quit()
 

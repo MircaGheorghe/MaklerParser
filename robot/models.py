@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
 
 # Create your models here.
 class Account(models.Model):
@@ -12,7 +13,7 @@ class Link(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE, default=1)
     content = models.TextField()
     payment = models.BooleanField(default=False)
-    post_date = models.DateTimeField(null = True, blank = True)
+    post_date = models.DateTimeField(null = True, blank = True, default=datetime.now())
 
 class Category(models.Model):
     content = models.CharField(max_length=400)
