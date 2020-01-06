@@ -67,7 +67,31 @@
   filter: blur(4px);
 }
 
-.modal-wrapper, .modal-wrapper2, .modal-wrapper3{
+.modal-wrapper{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(41, 171, 164, 0.8);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.25s ease-in-out;
+}
+
+.modal-wrapper2{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(41, 171, 164, 0.8);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.25s ease-in-out;
+}
+
+.modal-wrapper3{
   width: 100%;
   height: 100%;
   position: fixed;
