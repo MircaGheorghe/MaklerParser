@@ -140,7 +140,9 @@ class pasteMakler:
         chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--disable-gpu')
-        self.driver = webdriver.Chrome("C:\Program Files (x86)\Google\Chrome\Application\chromedriver")
+        chrome_options.add_argument('--no-sandbox')
+        chrome_options.add_argument('--disable-dev-shm-usage')
+        self.driver = webdriver.Chrome("/usr/bin/chromedriver", options=chrome_options)
         self.driver.get("https://makler.md/md/")
         self.driver.implicitly_wait(3)
         self.driver.find_element_by_id('logInDiv').click()
@@ -309,6 +311,6 @@ class pasteMakler:
         except:
             self.driver.get_screenshot_as_file('screenshots/postare.png')
 
-    # def quit_driver(self):
-    #     self.driver.quit()
+    def quit_driver(self):
+        self.driver.quit()
 
