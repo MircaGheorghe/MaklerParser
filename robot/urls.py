@@ -8,4 +8,5 @@ urlpatterns = [
     path('set_category', views.set_category, name='set_category'),
     path('set_account', views.set_account, name='set_account'),
     path('set_link', views.set_link, name='set_link'),
+    path('delete_link', views.delete_link, name='delete_link'),
 ]

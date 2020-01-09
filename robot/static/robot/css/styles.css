@@ -57,6 +57,16 @@
     color: #2FBF37;
 }
 
+.form_select{
+  width: 150px;
+  padding: 5px 7px;
+  border-radius: 3px;
+}
+
+#link_cu_plata{
+  width: 10px;
+}
+
 select {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -65,7 +75,7 @@ select {
   outline: 0;
   box-shadow: none;
   border: 0 !important;
-  background: #2c3e50;
+  background: #787c80;
   background-image: none;
 }
 /* Remove IE arrow */
@@ -76,10 +86,10 @@ select::-ms-expand {
 .select {
   position: relative;
   display: flex;
-  width: 20em;
-  height: 3em;
+  width: 150px;
+  height: 35px;
   line-height: 3;
-  background: #2c3e50;
+  background: #6b6d6e;
   overflow: hidden;
   border-radius: .25em;
 }
@@ -93,10 +103,11 @@ select {
 .select::after {
   content: '\25BC';
   position: absolute;
-  top: 0;
   right: 0;
-  padding: 0 1em;
-  background: #34495e;
+  top: -5px;
+  bottom: 0px;
+  padding: 0 7px;
+  background: #606064;
   cursor: pointer;
   pointer-events: none;
   -webkit-transition: .25s all ease;
@@ -109,7 +120,7 @@ select {
 }
 
 /* MODAL */
-.page-wrapper, .page-wrapper2, .page-wrapper3 {
+.page-wrapper, .page-wrapper2, .page-wrapper3, .page-wrapper4 {
   width: 100%;
   height: 100px;
 }
@@ -169,6 +180,11 @@ select {
   visibility: visible;
 }
 
+.modal-delete.open {
+  opacity: 1;
+  visibility: visible;
+}
+
 .modal {
   width: 600px;
   height: 400px;
@@ -182,6 +198,69 @@ select {
   transition: all 0.5s ease-in-out;
 }
 
+.modal-delete{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(41, 171, 164, 0.8);
+  visibility: hidden;
+  opacity: 0;
+  transition: all 0.25s ease-in-out;
+  display: flex;
+}
+
+.modal_del {
+  width: 400px;
+  height: 200px;
+  display: block;
+  margin: 50% 0 0 -300px;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  background: #fff;
+  opacity: 0;
+  transition: all 0.5s ease-in-out;
+}
+
+.head_del {
+  width: 100%;
+  height: 45px;
+  background: #5f5d5e;
+}
+
+.marg{
+  margin-right: 20px;
+}
+
+.answer{
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+}
+
+.deleteaa p{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.answer a{
+  margin-left: 10px;
+  display: block;
+  background-color: gray;
+  width: 30px;
+  padding: 7px 30px;
+  border-radius: 7px;
+  color: white;
+  text-decoration: none;
+}
+
+.answer a:hover{
+  background-color: #5f5d5e;
+}
+
 .modal-wrapper.open .modal {
   margin-top: -200px;
   opacity: 1;
@@ -193,6 +272,10 @@ select {
 }
 
 .modal-wrapper3.open .modal {
+  margin-top: -200px;
+  opacity: 1;
+}
+.modal-delete.open .modal_del {
   margin-top: -200px;
   opacity: 1;
 }
@@ -330,16 +413,6 @@ iframe {
 }
 
 
-
-
-/*//////////////////////////////////////////////////////////////////
-[ Utiliti ]*/
-
-
-
-
-
-
 /*//////////////////////////////////////////////////////////////////
 [ Table ]*/
 
@@ -363,7 +436,7 @@ iframe {
 }
 
 .wrap-table100 {
-  width: 1170px;
+  width: 90vw;
 }
 
 table {
@@ -453,7 +526,7 @@ tbody .column2{
 }
 
 .column1 {
-  width: 750px;
+  width: 850px;
   padding-left: 40px;
   font-size: 16px;
 }
@@ -464,7 +537,7 @@ tbody .column2{
 }
 
 .column3 {
-  width: 100px;
+  width: 75px;
   text-align: center;
   font-size: 18px;
 }
@@ -485,87 +558,13 @@ thead .column4{
   text-align: center;
 }
 
+.delete_button{
+  color: red;
+  font-weight: bold;
+}
+
 
 .container_form{
   margin: 0 auto;
   position: relative;
-}
-
-
-@media screen and (max-width: 992px) {
-  table {
-    display: block;
-  }
-  table > *, table tr, table td, table th {
-    display: block;
-  }
-  table thead {
-    display: none;
-  }
-  table tbody tr {
-    height: auto;
-    padding: 37px 0;
-  }
-  table tbody tr td {
-    padding-left: 40% !important;
-    margin-bottom: 24px;
-  }
-  table tbody tr td:last-child {
-    margin-bottom: 0;
-  }
-  table tbody tr td:before {
-    font-family: OpenSans-Regular;
-    font-size: 14px;
-    color: #999999;
-    line-height: 1.2;
-    font-weight: unset;
-    position: absolute;
-    width: 40%;
-    left: 30px;
-    top: 0;
-  }
-  table tbody tr td:nth-child(1):before {
-    content: "Date";
-  }
-  table tbody tr td:nth-child(2):before {
-    content: "Order ID";
-  }
-  table tbody tr td:nth-child(3):before {
-    content: "Name";
-  }
-  table tbody tr td:nth-child(4):before {
-    content: "Price";
-  }
-  table tbody tr td:nth-child(5):before {
-    content: "Quantity";
-  }
-  table tbody tr td:nth-child(6):before {
-    content: "Total";
-  }
-
-  .column4,
-  .column5,
-  .column6 {
-    text-align: left;
-  }
-
-  .column4,
-  .column5,
-  .column6,
-  .column1,
-  .column2,
-  .column3 {
-    width: 100%;
-  }
-
-  tbody tr {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 576px) {
-  .container-table100 {
-    padding-left: 15px;
-    padding-right: 15px;
-  }
 }
