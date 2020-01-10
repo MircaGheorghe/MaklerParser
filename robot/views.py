@@ -51,8 +51,7 @@ def set_account(request):
     acc.username = login
     acc.password = password
     acc.save()
-    print("inainte")
-    return render(request, 'robot/modal_link.html', {
+    return render(request, 'robot/table.html', {
         'account': Account.objects.all(),
         'category': Category.objects.all(),
         'links':Link.objects.all(),

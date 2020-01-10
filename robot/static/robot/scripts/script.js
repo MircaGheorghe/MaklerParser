@@ -54,7 +54,6 @@ $( document ).ready(function() {
     });
   });
 $(document).on('click', '.delete_button', function() {
-  console.log($(this).data("id"))
   $(".yes_delete").data("id", $(this).data("id"));
   $('.modal-delete').toggleClass('open');
       $('.page-wrapper4').toggleClass('blur-it');
@@ -90,7 +89,7 @@ $(document).on('click', '.delete_button', function() {
           "rez" : content
       },
       success: function (data) {
-          $('.modal-wrapper3').html(data)
+          $('#render_table').html(data)
       }
     });
   });
@@ -137,7 +136,6 @@ $("#link_add_form").on("submit", function (e) {
 
 $(document).on("click", ".yes_delete" ,function () {
   id = $(this).data("id");
-  console.log(id)
 $.ajax({
   url: '/delete_link',
   data: {
