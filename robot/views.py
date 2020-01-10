@@ -15,6 +15,7 @@ def index(request):
         })
 
 
+
 def start_parser(request):
     condition = mustPosted.objects.last()
     condition.content = not condition.content
@@ -31,9 +32,14 @@ def set_category(request):
     categorys = Category()
     categorys.content = cont
     categorys.save()
-    return render(request, 'robot/index.html', {
+    return render(request, 'robot/table.html', {
+        'account': Account.objects.all(),
         'category': Category.objects.all(),
+        'links':Link.objects.all(),
+        'form':NameForm(),
         })
+
+
 
 def set_account(request):
     login = request.GET.get('login', None)
@@ -45,7 +51,14 @@ def set_account(request):
     acc.username = login
     acc.password = password
     acc.save()
-    return HttpResponse(status = 200)
+    print("inainte")
+    return render(request, 'robot/modal_link.html', {
+        'account': Account.objects.all(),
+        'category': Category.objects.all(),
+        'links':Link.objects.all(),
+        'form':NameForm(),
+        })
+
 
 
 def set_link(request):
@@ -63,25 +76,23 @@ def set_link(request):
     else:
         newLink.payment = False
     newLink.save()
-    return HttpResponse(status = 200)
-# def set_link(request):
-#     if request.method == 'POST':
-#         link = request.POST.get('link')
-#         cont = request.POST.get('cont')
-#         category = request.POST.get('category')
-#         pay = request.POST.get('payment')
 
-#         newLink = Link()
-#         newLink.content = link
-#         newLink.account_id = cont
-#         newLink.category_id = category
-#         if not pay == None:
-#             newLink.payment = True
-#         else:
-#             newLink.payment = False
+    return render(request, 'robot/table.html', {
+        'account': Account.objects.all(),
+        'category': Category.objects.all(),
+        'links':Link.objects.all(),
+        'form':NameForm(),
+        })
 
-#         newLink.save()
-#     return redirect('home')
+
 
 def delete_link(request):
-    return redirect('home')
+    id = request.GET.get('id', None)
+    Link.objects.filter(id=id).delete()
+
+    return render(request, 'robot/table.html', {
+        'account': Account.objects.all(),
+        'category': Category.objects.all(),
+        'links':Link.objects.all(),
+        'form':NameForm(),
+        })

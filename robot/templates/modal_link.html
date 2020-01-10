@@ -1,0 +1,27 @@
+{% load static %}
+<div class="modal">
+    <div class="head">
+      <a class="btn-close trigger3" href="#">x</a>
+    </div>
+    <div class="content">
+      <div class="container_form">
+          <form id="link_add_form" action="{% url 'set_link' %}" method="get" autocomplete="off"> {% csrf_token %}
+              <input type="text" id="link_content" class="category" placeholder="link-ul aici" required>
+              <select class="form_select" name="cont" id="link_select_cont" required>
+                  <option value="" style="display: none;">Alege contul</option>
+                  {% for aut in account %}
+                  <option value="{{aut.id}}">{{aut.username}}</option>
+                  {%endfor%}
+              </select>
+              <select class="form_select" name="category" id="link_select_category" required>
+                  <option value="" style="display: none;">Elege categoria</option>
+                  {% for cat in category %}
+                  <option value="{{cat.id}}">{{cat}}</option>
+                  {%endfor%}
+              </select><br><br>
+              <span>Cu plata: <input id="link_cu_plata" type="checkbox" name="payment" style="display: inline;"></span>
+              <input type="submit" value="Trimite" class="submit_button" id="send_link">
+          </form>
+      </div>
+    </div>
+  </div>

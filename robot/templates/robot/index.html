@@ -28,46 +28,48 @@
         </div>
     </div>
 
-
+<!-- TABELA -->
     <div class="limiter">
 		<div class="container-table100">
 			<div class="wrap-table100">
-				<div class="table100">
-					<table>
-                        <thead>
-                            <tr class="table100-head">
-                                <th class="column1">link</th>
-                                <th class="column2">login</th>
-                                <th class="column3">cu plata</th>
-                                <th class="column4">data postarii</th>
-                                <th class="column5"></th>
-                            </tr>
-                        </thead>
-                    {% for cat in category %}
-                        <tbody>
-                            <tr class="table100-head">
-                                <th class="column1 cat">{{ cat.content }}</th>
-                                <th class="column2 cat" collspan="2">{{ links|get_username:cat}}</th>
-                                <th class="column3 cat"></th>
-                                <th class="column4 cat"></th>
-                                <th class="column5 cat"></th>
-                            </tr>
-                        {% for link in links|in_category:cat %}
-                            <tr>
-                                <td class="column1">{{ link.content }}</td>
-                                <td class="column2" collspan="2"></td>
-                                <td class="column3">{{ link.payment }}</td>
-                                <td class="column4">{{ link.post_date }}</td>
-                                <td class="column5"><button id="{{link_id}}" class="delete_button" onclick="addButton(this)">sterge</button></td>
-                            </tr>
-                        </tbody>
-                        {% endfor %}
-                    {% endfor %}
-					</table>
+				<div class="table100" id="render_table">
+          <table>
+            <thead>
+                <tr class="table100-head">
+                    <th class="column1">link</th>
+                    <th class="column2">login</th>
+                    <th class="column3">cu plata</th>
+                    <th class="column4">data postarii</th>
+                    <th class="column5"></th>
+                </tr>
+            </thead>
+        {% for cat in category %}
+            <tbody>
+                <tr class="table100-head">
+                    <th class="column1 cat">{{ cat.content }}</th>
+                    <th class="column2 cat" collspan="2">{{ links|get_username:cat}}</th>
+                    <th class="column3 cat"></th>
+                    <th class="column4 cat"></th>
+                    <th class="column5 cat"></th>
+                </tr>
+            {% for link in links|in_category:cat %}
+                <tr>
+                    <td class="column1">{{ link.content }}</td>
+                    <td class="column2" collspan="2"></td>
+                    <td class="column3">{{ link.payment }}</td>
+                    <td class="column4">{{ link.post_date }}</td>
+                    <td class="column5"><button data-id='{{link.id}}' class="delete_button">sterge</button></td>
+                </tr>
+            </tbody>
+            {% endfor %}
+        {% endfor %}
+</table>
 				</div>
 			</div>
 		</div>
     </div>
+
+<!-- Modal pentru adaugarea categoriilor -->
   <div class="modal-wrapper">
     <div class="modal">
       <div class="head">
@@ -83,6 +85,8 @@
       </div>
     </div>
   </div>
+
+<!-- Modal pentru adaugarea conturiloe -->
   <div class="modal-wrapper2">
     <div class="modal">
       <div class="head">
@@ -106,6 +110,7 @@
     </div>
   </div>
 
+<!-- Modal pentru adaugarea link-uriloe -->
   <div class="modal-wrapper3">
     <div class="modal">
       <div class="head">
@@ -135,6 +140,7 @@
     </div>
   </div>
 
+  <!-- Modal pentru stergere link-urilor -->
   <div class="modal-delete">
     <div class="modal_del">
       <div class="head_del">
@@ -143,7 +149,8 @@
       <div class="content deleteaa">
         <p>Sunteți sigur că vreți să ștergeți ?</p>
         <div class="answer">
-          <a href="">Nu</a>
+          <button data-id="" class="yes_delete">Da</button>
+          <button class="trigger4">Nu</button>
         </div>
       </div>
     </div>

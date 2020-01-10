@@ -45,6 +45,7 @@ $( document ).ready(function() {
        return false;
     });
   });
+
   $( document ).ready(function() {
     $('.trigger4').on('click', function() {
        $('.modal-delete').toggleClass('open');
@@ -52,20 +53,13 @@ $( document ).ready(function() {
        return false;
     });
   });
-  $( document ).ready(function() {
-    $('.delete_button').on('click', function() {
-       $('.modal-delete').toggleClass('open');
+$(document).on('click', '.delete_button', function() {
+  console.log($(this).data("id"))
+  $(".yes_delete").data("id", $(this).data("id"));
+  $('.modal-delete').toggleClass('open');
       $('.page-wrapper4').toggleClass('blur-it');
        return false;
-    });
-  });
-
-  function addButton(button){
-    var a = document.createElement("a");
-    a.innerHTML = "Da";
-    document.getElementsByClassName("answer").appendChild(a)
-  }
-
+});
 
   //ajax requests
   $(".start_link").on("click", function () {
@@ -96,6 +90,7 @@ $( document ).ready(function() {
           "rez" : content
       },
       success: function (data) {
+          $('.modal-wrapper3').html(data)
       }
     });
   });
@@ -114,6 +109,7 @@ $( document ).ready(function() {
         "author" : author
     },
     success: function (data) {
+      $('#render_table').html(data)
     }
   });
 });
@@ -133,6 +129,22 @@ $("#link_add_form").on("submit", function (e) {
         "cu_plata" : cu_plata
     },
     success: function (data) {
+      $('#render_table').html(data)
     }
   });
+});
+
+
+$(document).on("click", ".yes_delete" ,function () {
+  id = $(this).data("id");
+  console.log(id)
+$.ajax({
+  url: '/delete_link',
+  data: {
+      "id" : id,
+  },
+  success: function (data) {
+    $('#render_table').html(data)
+  }
+});
 });

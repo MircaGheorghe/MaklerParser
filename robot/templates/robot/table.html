@@ -1,0 +1,33 @@
+{% load robot_extras %}
+{% load static %}
+<table>
+    <thead>
+        <tr class="table100-head">
+            <th class="column1">link</th>
+            <th class="column2">login</th>
+            <th class="column3">cu plata</th>
+            <th class="column4">data postarii</th>
+            <th class="column5"></th>
+        </tr>
+    </thead>
+{% for cat in category %}
+    <tbody>
+        <tr class="table100-head">
+            <th class="column1 cat">{{ cat.content }}</th>
+            <th class="column2 cat" collspan="2">{{ links|get_username:cat}}</th>
+            <th class="column3 cat"></th>
+            <th class="column4 cat"></th>
+            <th class="column5 cat"></th>
+        </tr>
+    {% for link in links|in_category:cat %}
+        <tr>
+            <td class="column1">{{ link.content }}</td>
+            <td class="column2" collspan="2"></td>
+            <td class="column3">{{ link.payment }}</td>
+            <td class="column4">{{ link.post_date }}</td>
+            <td class="column5"><button data-id="{{link.id}}" class="delete_button">sterge</button></td>
+        </tr>
+    </tbody>
+    {% endfor %}
+{% endfor %}
+</table>
