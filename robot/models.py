@@ -14,10 +14,11 @@ class Link(models.Model):
     content = models.TextField()
     payment = models.BooleanField(default=False)
     posted = models.BooleanField(default=False)
-    post_date = models.DateTimeField(null = True, blank = True)
+    post_date = models.DateTimeField(null = True, blank=True)
 
 class Category(models.Model):
     content = models.CharField(max_length=400)
+    name = models.CharField(max_length=400, default="name")
 
 class mustPosted(models.Model):
     content = models.BooleanField(default=False)

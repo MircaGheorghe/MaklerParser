@@ -7,24 +7,34 @@
     {% load robot_extras %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static 'robot/css/styles.css' %}">
-    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Bot</title>
 </head>
 <body>
     <div class="top_container">
         <div class="activate">
             <button class="start_link">Modifica</button>
-            <p class="status">Bot-ul este <span class="spec"></span></p>
+            <p class="status">Bot-ul este
+              <span class="spec">
+                {% if is_work.content == False %}
+                  dezactivat
+                {% else %}
+                  activat
+                {%endif%}
+              </span>
+            </p>
         </div>
         <div class="add_content">
           <p>Adauga: &nbsp&nbsp&nbsp&nbsp</p>
           <div class="select">
               <select name="toDataBase" id="field" class="">
                   <option style="display: none;">Alege</option>
-                  <option value="account" id="acc">Categorie</option>
-                  <option value="ctegory" id="cat">Cont</option>
-                  <option value="link" id="link">Link</option>
+                  <option value="account" id="cat">Categorie</option>
+                  <option value="ctegory" id="acc">Cont</option>
+                  <option value="link"    id="link">Link</option>
               </select>
           </div>
+          <button id="what_to_add">Trimite</button>
         </div>
     </div>
 
@@ -58,7 +68,7 @@
                     <td class="column2" collspan="2"></td>
                     <td class="column3">{{ link.payment }}</td>
                     <td class="column4">{{ link.post_date }}</td>
-                    <td class="column5"><button data-id='{{link.id}}' class="delete_button">sterge</button></td>
+                    <td class="column5"><button data-id='{{link.id}}' class="delete_button"><i class="fa fa-trash-o" style="font-size:24px"></i></button></td>
                 </tr>
             </tbody>
             {% endfor %}
@@ -78,7 +88,8 @@
       <div class="content">
         <div class="container_form">
             <form id="category_add_form" action="{% url 'set_category' %}" method="get" autocomplete="off"> {% csrf_token %}
-                <input type="text" id="category_input" class="category" placeholder="link-ul categoriei aici" required>
+                <input type="text" id="category_input" class="category" placeholder="denumirea categoriei" required>
+                <input type="text" id="category_input" class="category" placeholder="link-ul categoriei" required>
                 <input type="submit" value="Trimite" class="submit_button" id="send_category">
             </form>
         </div>
@@ -127,9 +138,9 @@
                     {%endfor%}
                 </select>
                 <select class="form_select" name="category" id="link_select_category" required>
-                    <option value="" style="display: none;">Elege categoria</option>
+                    <option value="" style="display: none;">Alege categoria</option>
                     {% for cat in category %}
-                    <option value="{{cat.id}}">{{cat}}</option>
+                    <option value="{{cat.id}}">{{cat.name}}</option>
                     {%endfor%}
                 </select><br><br>
                 <span>Cu plata: <input id="link_cu_plata" type="checkbox" name="payment" style="display: inline;"></span>

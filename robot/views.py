@@ -4,6 +4,7 @@ from django.template import loader
 from robot.models import *
 from .forms import NameForm
 from django.http import JsonResponse
+import os
 
 # Create your views here.
 def index(request):
@@ -11,12 +12,13 @@ def index(request):
         'account': Account.objects.all(),
         'category': Category.objects.all(),
         'links':Link.objects.all(),
+        'is_work': mustPosted.objects.last(),
         'form':NameForm(),
         })
 
 
 
-def start_parser(request):
+def change_text(request):
     condition = mustPosted.objects.last()
     condition.content = not condition.content
     condition.save()
@@ -25,12 +27,18 @@ def start_parser(request):
     }
     return JsonResponse(data)
 
+def start_parser(request):
+    os.system("python manage.py robot")
+    return HttpResponse(200)
 
 
+# Functie pentru a salva o nou categorie in baza de date
 def set_category(request):
     cont = request.GET.get('rez', None)
+    cat_name = request.GET.get('name', None)
     categorys = Category()
     categorys.content = cont
+    categorys.name = cat_name
     categorys.save()
     return render(request, 'robot/table.html', {
         'account': Account.objects.all(),
@@ -51,7 +59,7 @@ def set_account(request):
     acc.username = login
     acc.password = password
     acc.save()
-    return render(request, 'robot/table.html', {
+    return render(request, 'robot/modal_link.html', {
         'account': Account.objects.all(),
         'category': Category.objects.all(),
         'links':Link.objects.all(),

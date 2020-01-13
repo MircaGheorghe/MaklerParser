@@ -8,6 +8,7 @@ from selenium.webdriver.chrome.options import Options
 import re
 from datetime import datetime
 import os
+from robot.models import *
 
 
 class getMakler:

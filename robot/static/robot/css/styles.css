@@ -87,11 +87,12 @@ select::-ms-expand {
   position: relative;
   display: flex;
   width: 150px;
-  height: 35px;
+  height: 30px;
   line-height: 3;
   background: #6b6d6e;
   overflow: hidden;
   border-radius: .25em;
+  margin: 0 20px;
 }
 select {
   flex: 1;
@@ -104,7 +105,7 @@ select {
   content: '\25BC';
   position: absolute;
   right: 0;
-  top: -5px;
+  top: -7px;
   bottom: 0px;
   padding: 0 7px;
   background: #606064;
@@ -117,6 +118,22 @@ select {
 /* Transition */
 .select:hover::after {
   color: #f39c12;
+}
+
+#what_to_add{
+  display: block;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    width: 100px;
+    padding: 7px 0;
+    border-radius: 3px;
+    background: rgb(88, 88, 88);
+    transition: background .3s;
+}
+
+#what_to_add:hover{
+  background-color: #252525;
 }
 
 /* MODAL */
@@ -191,6 +208,7 @@ select {
   background: #fff;
   opacity: 0;
   transition: all 0.5s ease-in-out;
+  border-radius: 5px 5px 5px 5px;
 }
 
 .modal-delete.open {
@@ -284,6 +302,7 @@ select {
   padding: 12px 30px;
   overflow: hidden;
   background: #5f5d5e;
+  border-radius: 5px 5px 0 0;
 }
 
 .btn-close {
@@ -301,6 +320,7 @@ select {
 
 .content {
   padding: 10%;
+  border-radius: 0 0 5px 5px;
 }
 
 .good-job {
