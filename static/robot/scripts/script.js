@@ -1,14 +1,14 @@
 $( document ).ready(function() {
-    $("#field").change(function(){
-        var id = $(this).find("option:selected").attr("id");
+    $("#what_to_add").on('click', function(){
+        var id = $("#field option:selected").attr("id");
         switch (id){
-            case "acc":
+            case "cat":
             $(function(){
                 $('.modal-wrapper').toggleClass('open');
                 $('.page-wrapper').toggleClass('blur-it');
                 return false;
             }); break;
-            case "cat":
+            case "acc":
             $(function(){
                 $('.modal-wrapper2').toggleClass('open');
                 $('.page-wrapper').toggleClass('blur-it');
@@ -23,6 +23,7 @@ $( document ).ready(function() {
         }
     });
 });
+
 
   $( document ).ready(function() {
     $('.trigger').on('click', function() {
@@ -45,6 +46,7 @@ $( document ).ready(function() {
        return false;
     });
   });
+
   $( document ).ready(function() {
     $('.trigger4').on('click', function() {
        $('.modal-delete').toggleClass('open');
@@ -52,26 +54,20 @@ $( document ).ready(function() {
        return false;
     });
   });
-  $( document ).ready(function() {
-    $('.delete_button').on('click', function() {
-       $('.modal-delete').toggleClass('open');
+$(document).on('click', '.delete_button', function() {
+  $(".yes_delete").data("id", $(this).data("id"));
+  $('.modal-delete').toggleClass('open');
       $('.page-wrapper4').toggleClass('blur-it');
        return false;
-    });
-  });
+});
 
-  function addButton(button){
-    var a = document.createElement("a");
-    a.innerHTML = "Da";
-    document.getElementsByClassName("answer").appendChild(a)
-  }
+  //AJAX REQUEST
 
-
-  //ajax requests
+  //schimbarea textului pe pagina principala
   $(".start_link").on("click", function () {
 
     $.ajax({
-      url: '/start',
+      url: '/change_text',
       data: {
       },
       dataType: 'json',
@@ -85,22 +81,37 @@ $( document ).ready(function() {
       }
     });
   });
+//pornirea parserului
+  $(".start_link").on("click", function () {
 
-
-  $("#category_add_form").on("submit", function (e) {
-      e.preventDefault();
-    content = $("#category_input").val();
     $.ajax({
-      url: '/set_category',
+      url: '/start_parser',
       data: {
-          "rez" : content
       },
+      dataType: 'json',
       success: function (data) {
       }
     });
   });
 
+//trimiterea datelor din forma de adaugare a categoriei/reinnoirea tabelului
+  $("#category_add_form").on("submit", function (e) {
+      e.preventDefault();
+    content = $("#category_input").val();
+    name = $("#category_name_input").val();
+    $.ajax({
+      url: '/set_category',
+      data: {
+          "name" : name,
+          "rez" : content
+      },
+      success: function (data) {
+          $('#render_table').html(data)
+      }
+    });
+  });
 
+//trimiterea datelor din forma de adaugare a contului
   $("#cont_add_form").on("submit", function (e) {
     e.preventDefault();
   login = $("#cont_login").val();
@@ -114,10 +125,12 @@ $( document ).ready(function() {
         "author" : author
     },
     success: function (data) {
+      $('modal-wrapper3').html(data)
     }
   });
 });
 
+//trimiterea datelor din forma de adaugare a link-ului
 $("#link_add_form").on("submit", function (e) {
     e.preventDefault();
     link = $("#link_content").val();
@@ -133,6 +146,21 @@ $("#link_add_form").on("submit", function (e) {
         "cu_plata" : cu_plata
     },
     success: function (data) {
+      $('#render_table').html(data)
     }
   });
+});
+
+//stergerea unui link
+$(document).on("click", ".yes_delete" ,function () {
+  id = $(this).data("id");
+$.ajax({
+  url: '/delete_link',
+  data: {
+      "id" : id,
+  },
+  success: function (data) {
+    $('#render_table').html(data)
+  }
+});
 });
