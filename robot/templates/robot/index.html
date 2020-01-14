@@ -78,12 +78,7 @@
             <form id="cont_add_form" action="{% url 'set_account' %}" method="get" autocomplete="off"> {% csrf_token %}
                 <input type="text" id="cont_login" class="category" placeholder="login" required>
                 <input type="text" id="cont_pass" class="category" placeholder="parola" required>
-                <select name="author" class="form_select" id="cont_author" required>
-                    <option value="" style="display: none;">Alege autorul</option>
-                    {% for aut in users %}
-                    <option value="{{ aut.author_id }}">{{aut.username}}</option>
-                    {%endfor%}
-                </select>
+                <input type="hidden" id="curent_user" name="curent_user" value="{{ current_user }}">
                 <input type="submit" value="Trimite" class="submit_button" id="send_cont">
             </form>
         </div>
@@ -92,7 +87,7 @@
   </div>
 
 <!-- Modal pentru adaugarea link-urilor -->
-  <div class="modal-wrapper3">
+  <div class="modal-wrapper3 link_modal_form">
     {% include 'robot/modal_link.html'%}
   </div>
 

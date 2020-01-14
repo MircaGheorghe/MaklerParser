@@ -39,13 +39,12 @@ $( document ).ready(function() {
        return false;
     });
   });
-  $( document ).ready(function() {
-    $('.trigger3').on('click', function() {
-       $('.modal-wrapper3').toggleClass('open');
+
+  $(document).on("click", ".trigger3", function(){
+    $('.modal-wrapper3').toggleClass('open');
       $('.page-wrapper3').toggleClass('blur-it');
        return false;
-    });
-  });
+  })
 
   $( document ).ready(function() {
     $('.trigger4').on('click', function() {
@@ -94,8 +93,8 @@ $(document).on('click', '.delete_button', function() {
     });
   });
 
-//trimiterea datelor din forma de adaugare a categoriei/reinnoirea tabelului
-$("#category_add_form").on("submit", function (e) {
+//trimiterea datelor din forma de adaugare a categoriei/reinnoirea tabelului si modalului
+$(document).on("submit", "#category_add_form", function (e) {
   e.preventDefault();
   content = $("#category_link_input").val();
   name = $("#category_name_input").val();
@@ -110,15 +109,17 @@ $("#category_add_form").on("submit", function (e) {
           get_modal();
       }
   });
+
+  $("#category_link_input").val('');
+  $("#category_name_input").val('');
 });
 
-
 //trimiterea datelor din forma de adaugare a contului
-  $("#cont_add_form").on("submit", function (e) {
+  $(document).on("submit","#cont_add_form", function (e) {
     e.preventDefault();
   login = $("#cont_login").val();
   pass = $("#cont_pass").val();
-  author = $("#cont_author").val();
+  author = $("#curent_user").val();
   $.ajax({
     url: '/set_account',
     data: {
@@ -130,10 +131,12 @@ $("#category_add_form").on("submit", function (e) {
       get_modal();
     }
   });
+  $('#cont_login').val('');
+  $('#cont_pass').val('');
 });
 
 //trimiterea datelor din forma de adaugare a link-ului
-$("#link_add_form").on("submit", function (e) {
+$(document).on("submit", "#link_add_form", function (e) {
     e.preventDefault();
     link = $("#link_content").val();
     cont = $("#link_select_cont").val();
@@ -151,6 +154,7 @@ $("#link_add_form").on("submit", function (e) {
       get_table();
     }
   });
+  $("#link_content").val('');
 });
 
 //stergerea unui link

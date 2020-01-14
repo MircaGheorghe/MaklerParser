@@ -17,10 +17,9 @@ def index(request):
         'links':Link.objects.all(),
         'is_work': mustPosted.objects.last(),
         'users': User.objects.all(),
+        'current_user': request.user.id,
         'form':NameForm(),
         })
-
-
 
 def change_text(request):
     condition = mustPosted.objects.last()
