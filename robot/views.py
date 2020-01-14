@@ -7,6 +7,9 @@ from django.http import JsonResponse
 import os
 from django.contrib.auth.decorators import login_required
 from django.core.management import call_command
+from subprocess import Popen
+import glob
+from django.conf import settings
 
 # Create your views here.
 @login_required(login_url='/admin/login/?next=/') #redirect when user is not logged in
@@ -25,8 +28,11 @@ def change_text(request):
     condition = mustPosted.objects.last()
     condition.content = not condition.content
     condition.save()
+    robot = glob.glob('manage.py')
+    env = os.environ
+    print(robot)
     if condition.content == True:
-        call_command('robot')
+        proc = Popen(['python manage.py robot'], shell=True)
     data = {
         'status': condition.content
     }
