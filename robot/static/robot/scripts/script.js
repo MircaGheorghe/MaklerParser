@@ -95,21 +95,23 @@ $(document).on('click', '.delete_button', function() {
   });
 
 //trimiterea datelor din forma de adaugare a categoriei/reinnoirea tabelului
-  $("#category_add_form").on("submit", function (e) {
-      e.preventDefault();
-    content = $("#category_input").val();
-    name = $("#category_name_input").val();
+$("#category_add_form").on("submit", function (e) {
+  e.preventDefault();
+  content = $("#category_link_input").val();
+  name = $("#category_name_input").val();
     $.ajax({
-      url: '/set_category',
+      url: '/set_category_table',
       data: {
           "name" : name,
           "rez" : content
       },
       success: function (data) {
-          $('#render_table').html(data)
+          get_table();
+          get_modal();
       }
-    });
   });
+});
+
 
 //trimiterea datelor din forma de adaugare a contului
   $("#cont_add_form").on("submit", function (e) {
@@ -125,7 +127,7 @@ $(document).on('click', '.delete_button', function() {
         "author" : author
     },
     success: function (data) {
-      $('modal-wrapper3').html(data)
+      get_modal();
     }
   });
 });
@@ -146,7 +148,7 @@ $("#link_add_form").on("submit", function (e) {
         "cu_plata" : cu_plata
     },
     success: function (data) {
-      $('#render_table').html(data)
+      get_table();
     }
   });
 });
@@ -160,7 +162,26 @@ $.ajax({
       "id" : id,
   },
   success: function (data) {
-    $('#render_table').html(data)
+    get_table();
   }
 });
 });
+
+
+function get_modal(){
+  $.ajax({
+    url: '/get_modal',
+    success: function (data) {
+      $('.link_modal_form').html(data)
+    }
+  });
+}
+
+function get_table(){
+  $.ajax({
+    url: '/get_table',
+    success: function (data) {
+      $('#render_table').html(data)
+    }
+  });
+}

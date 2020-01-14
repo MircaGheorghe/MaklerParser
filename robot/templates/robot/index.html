@@ -43,37 +43,7 @@
 		<div class="container-table100">
 			<div class="wrap-table100">
 				<div class="table100" id="render_table">
-          <table>
-            <thead>
-                <tr class="table100-head">
-                    <th class="column1">link</th>
-                    <th class="column2">login</th>
-                    <th class="column3">cu plata</th>
-                    <th class="column4">data postarii</th>
-                    <th class="column5"></th>
-                </tr>
-            </thead>
-        {% for cat in category %}
-            <tbody>
-                <tr class="table100-head">
-                    <th class="column1 cat">{{ cat.content }}</th>
-                    <th class="column2 cat" collspan="2">{{ links|get_username:cat}}</th>
-                    <th class="column3 cat"></th>
-                    <th class="column4 cat"></th>
-                    <th class="column5 cat"></th>
-                </tr>
-            {% for link in links|in_category:cat %}
-                <tr>
-                    <td class="column1">{{ link.content }}</td>
-                    <td class="column2" collspan="2"></td>
-                    <td class="column3">{{ link.payment }}</td>
-                    <td class="column4">{{ link.post_date }}</td>
-                    <td class="column5"><button data-id='{{link.id}}' class="delete_button"><i class="fa fa-trash-o" style="font-size:24px"></i></button></td>
-                </tr>
-            </tbody>
-            {% endfor %}
-        {% endfor %}
-</table>
+          {% include 'robot/table.html' %}
 				</div>
 			</div>
 		</div>
@@ -87,9 +57,9 @@
       </div>
       <div class="content">
         <div class="container_form">
-            <form id="category_add_form" action="{% url 'set_category' %}" method="get" autocomplete="off"> {% csrf_token %}
-                <input type="text" id="category_input" class="category" placeholder="denumirea categoriei" required>
-                <input type="text" id="category_input" class="category" placeholder="link-ul categoriei" required>
+            <form id="category_add_form" method="get" autocomplete="off"> {% csrf_token %}
+                <input type="text" id="category_name_input" class="category" placeholder="denumirea categoriei" required>
+                <input type="text" id="category_link_input" class="category" placeholder="link-ul categoriei" required>
                 <input type="submit" value="Trimite" class="submit_button" id="send_category">
             </form>
         </div>
@@ -110,8 +80,8 @@
                 <input type="text" id="cont_pass" class="category" placeholder="parola" required>
                 <select name="author" class="form_select" id="cont_author" required>
                     <option value="" style="display: none;">Alege autorul</option>
-                    {% for aut in account %}
-                    <option value="{{ aut.author_id }}">{{aut.author}}</option>
+                    {% for aut in users %}
+                    <option value="{{ aut.author_id }}">{{aut.username}}</option>
                     {%endfor%}
                 </select>
                 <input type="submit" value="Trimite" class="submit_button" id="send_cont">
@@ -121,34 +91,9 @@
     </div>
   </div>
 
-<!-- Modal pentru adaugarea link-uriloe -->
+<!-- Modal pentru adaugarea link-urilor -->
   <div class="modal-wrapper3">
-    <div class="modal">
-      <div class="head">
-        <a class="btn-close trigger3" href="#">x</a>
-      </div>
-      <div class="content">
-        <div class="container_form">
-            <form id="link_add_form" action="{% url 'set_link' %}" method="get" autocomplete="off"> {% csrf_token %}
-                <input type="text" id="link_content" class="category" placeholder="link-ul aici" required>
-                <select class="form_select" name="cont" id="link_select_cont" required>
-                    <option value="" style="display: none;">Alege contul</option>
-                    {% for aut in account %}
-                    <option value="{{aut.id}}">{{aut.username}}</option>
-                    {%endfor%}
-                </select>
-                <select class="form_select" name="category" id="link_select_category" required>
-                    <option value="" style="display: none;">Alege categoria</option>
-                    {% for cat in category %}
-                    <option value="{{cat.id}}">{{cat.name}}</option>
-                    {%endfor%}
-                </select><br><br>
-                <span>Cu plata: <input id="link_cu_plata" type="checkbox" name="payment" style="display: inline;"></span>
-                <input type="submit" value="Trimite" class="submit_button" id="send_link">
-            </form>
-        </div>
-      </div>
-    </div>
+    {% include 'robot/modal_link.html'%}
   </div>
 
   <!-- Modal pentru stergere link-urilor -->
