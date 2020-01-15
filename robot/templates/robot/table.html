@@ -30,8 +30,20 @@
         <th></th>
         <td>{{ link.content }}</td>
         <td>{{ link.account.username}}</td>
-        <td>{{ link.payment }}</td>
-        <td>{{ link.post_date }}</td>
+        <td>
+            {% if link.payment == True %}
+            Da
+            {% else %}
+            Nu
+            {% endif %}
+        </td>
+        <td>
+            {% if link.post_date == None %}
+            Nu a fost postat
+            {% else %}
+            {{link.post_date}}
+            {% endif %}
+        </td>
         <td>
             <a data-id="{{link.id}}l" class="delete_button" data-toggle="modal" data-target="#delete_modal">
                 <i class="fa fa-trash-o" style="font-size:24px"></i>
