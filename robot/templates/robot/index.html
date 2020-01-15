@@ -1,113 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load robot_extras %}
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    {% load robot_extras %}
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'robot/css/styles.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Bot</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'robot/css/style.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <title>Document</title>
 </head>
 <body>
-    <div class="top_container">
-        <div class="activate">
-            <button class="start_link">Modifica</button>
-            <p class="status">Bot-ul este
-              <span class="spec">
-                {% if is_work.content == False %}
-                  dezactivat
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand " href="#"><span class="text-danger">Makler</span> Control Panel</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarColor01">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#modal_add_category">Categorie</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#modal_add_account">Cont</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-toggle="modal" data-target="#modal_add_link">Link</a>
+            </li>
+          </ul>
+          <form class="form-inline">
+              {% if is_work.content == False %}
+              <button class="btn btn-danger my-2 my-sm-0 start_link" type="button">Inactiv</button>
                 {% else %}
-                  activat
-                {%endif%}
-              </span>
-            </p>
+                <button class="btn btn-succes my-2 my-sm-0 start_link" type="button">Activ</button>
+              {%endif%}
+            <button class="btn btn-primary my-2 my-sm-0" type="button">Log-out</button>
+          </form>
         </div>
-        <div class="add_content">
-          <p>Adauga: &nbsp&nbsp&nbsp&nbsp</p>
-          <div class="select">
-              <select name="toDataBase" id="field" class="">
-                  <option style="display: none;">Alege</option>
-                  <option value="account" id="cat">Categorie</option>
-                  <option value="ctegory" id="acc">Cont</option>
-                  <option value="link"    id="link">Link</option>
-              </select>
-          </div>
-          <button id="what_to_add">Trimite</button>
+      </nav>
+
+
+      <div class="container-fluid">
+        {% include 'robot/table.html' %}
+      </div>
+
+
+      <!-- Modal add category-->
+    <div class="modal fade" id="modal_add_category" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adaugă categorie</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success display_off" role="alert">
+                  Datele au fost trimise
+                </div>
+                <div class="modal-body">
+                      <form id="category_add_form" method="get" autocomplete="off">
+                          <div class="form-group">
+                            <label for="category_name_input">Denumirea categoriei</label>
+                            <input type="text" class="form-control" id="category_name_input" placeholder="Exemplu: uși ferestre" required>
+                          </div>
+                          <div class="form-group">
+                            <label for="category_link_input">Conținutul categoriei</label>
+                            <input type="text" class="form-control" id="category_link_input" placeholder="Exemplu: https://makler.md/md/construction-and-repair..." required>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
+                            <button type="submit" class="btn btn-primary">Salvează</button>
+                          </div>
+                      </form>
+                </div>
+            </div>
         </div>
     </div>
-
-<!-- TABELA -->
-    <div class="limiter">
-		<div class="container-table100">
-			<div class="wrap-table100">
-				<div class="table100" id="render_table">
-          {% include 'robot/table.html' %}
-				</div>
-			</div>
-		</div>
-    </div>
-
-<!-- Modal pentru adaugarea categoriilor -->
-  <div class="modal-wrapper">
-    <div class="modal">
-      <div class="head">
-        <a class="btn-close trigger" href="#">x</a>
-      </div>
-      <div class="content">
-        <div class="container_form">
-            <form id="category_add_form" method="get" autocomplete="off"> {% csrf_token %}
-                <input type="text" id="category_name_input" class="category" placeholder="denumirea categoriei" required>
-                <input type="text" id="category_link_input" class="category" placeholder="link-ul categoriei" required>
-                <input type="submit" value="Trimite" class="submit_button" id="send_category">
-            </form>
+    <!-- Modal add account-->
+    <div class="modal fade" id="modal_add_account" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Adaugă Cont</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="alert alert-success display_off" role="alert">
+                  Datele au fost trimise
+                </div>
+                <div class="modal-body">
+                    <form id="cont_add_form" method="get" autocomplete="off">
+                        <div class="form-group">
+                          <label for="cont_login">Login</label>
+                          <input type="text" class="form-control" id="cont_login" placeholder="Exemplu: +37368123456" required autocomplete="off">
+                        </div>
+                        <div class="form-group">
+                          <label for="cont_password">Parola</label>
+                          <input type="password" class="form-control" id="cont_pass" required>
+                        </div>
+                        <input type="hidden" id="curent_user" value="{{ current_user }}">
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
+                          <button type="submit" class="btn btn-primary">Salvează</button>
+                      </div>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-
-<!-- Modal pentru adaugarea conturiloe -->
-  <div class="modal-wrapper2">
-    <div class="modal">
-      <div class="head">
-        <a class="btn-close trigger2" href="#">x</a>
-      </div>
-      <div class="content">
-        <div class="container_form">
-            <form id="cont_add_form" action="{% url 'set_account' %}" method="get" autocomplete="off"> {% csrf_token %}
-                <input type="text" id="cont_login" class="category" placeholder="login" required>
-                <input type="text" id="cont_pass" class="category" placeholder="parola" required>
-                <input type="hidden" id="curent_user" name="curent_user" value="{{ current_user }}">
-                <input type="submit" value="Trimite" class="submit_button" id="send_cont">
-            </form>
-        </div>
-      </div>
-    </div>
-  </div>
-
-<!-- Modal pentru adaugarea link-urilor -->
-  <div class="modal-wrapper3 link_modal_form">
+    <!-- Modal add link-->
+    <div class="modal fade" id="modal_add_link" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     {% include 'robot/modal_link.html'%}
-  </div>
+    </div>
 
-  <!-- Modal pentru stergere link-urilor -->
-  <div class="modal-delete">
-    <div class="modal_del">
-      <div class="head_del">
-        <a class="btn-close trigger4 marg" href="#">x</a>
-      </div>
-      <div class="content deleteaa">
-        <p>Sunteți sigur că vreți să ștergeți ?</p>
-        <div class="answer">
-          <button data-id="" class="yes_delete">Da</button>
-          <button class="trigger4">Nu</button>
+
+    <!-- Modal pentru stergere -->
+    <div class="modal fade" id="delete_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Stergere</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Nu</button>
+            <button type="button" class="btn btn-primary yes_delete" data-id="">Da</button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-
-
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="{% static 'robot/scripts/script.js' %}"></script>
 </body>

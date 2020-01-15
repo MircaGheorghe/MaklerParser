@@ -1,6 +1,54 @@
 {% load robot_extras %}
 {% load static %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<table class="table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">link</th>
+        <th scope="col">login</th>
+        <th scope="col">cu plată</th>
+        <th scope="col">data postării</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for cat in category %}
+      <tr class="category">
+        <th class="gray"></th>
+        <td>{{ cat.name }}</td>
+        <td></td>
+        <td></td>
+        <td><th class="gray">
+            <a data-id="{{cat.id}}c" class="delete_button" data-toggle="modal" data-target="#delete_modal">
+                <i class="fa fa-trash-o" style="font-size:24px"></i>
+            </a>
+        </th></td>
+      </tr>
+      {% for link in links|in_category:cat %}
+      <tr>
+        <th></th>
+        <td>{{ link.content }}</td>
+        <td>{{ link.account.username}}</td>
+        <td>{{ link.payment }}</td>
+        <td>{{ link.post_date }}</td>
+        <td>
+            <a data-id="{{link.id}}l" class="delete_button" data-toggle="modal" data-target="#delete_modal">
+                <i class="fa fa-trash-o" style="font-size:24px"></i>
+            </a>
+        </td>
+      </tr>
+        {% endfor %}
+    {% endfor %}
+    </tbody>
+  </table>
+
+
+
+
+<!-- {% load robot_extras %}
+{% load static %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <table>
     <thead>
         <tr class="table100-head">
@@ -18,7 +66,7 @@
             <th class="column2 cat"></th>
             <th class="column3 cat"></th>
             <th class="column4 cat"></th>
-            <th class="column5 cat"></th>
+            <th class="column5 cat"><button data-id="{{cat.id}}c" class="delete_cat_button"><i class="fa fa-trash-o" style="font-size:24px"></i></button></th>
         </tr>
     {% for link in links|in_category:cat %}
         <tr>
@@ -26,9 +74,9 @@
             <td class="column2" collspan="2">{{ link.account.username}}</td>
             <td class="column3">{{ link.payment }}</td>
             <td class="column4">{{ link.post_date }}</td>
-            <td class="column5"><button data-id="{{link.id}}" class="delete_button"><i class="fa fa-trash-o" style="font-size:24px"></i></button></td>
+            <td class="column5"></td>
         </tr>
     </tbody>
     {% endfor %}
 {% endfor %}
-</table>
+</table> -->

@@ -1,27 +1,54 @@
 {% load static %}
-<div class="modal">
-  <div class="head">
-    <a class="btn-close trigger3" href="#">x</a>
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Adaugă Link</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="alert alert-success display_off" role="alert">
+            Datele au fost trimise
+          </div>
+          <div class="modal-body">
+              <form id="link_add_form" method="get">
+                  <div class="form-group">
+                    <label for="link_content">Conținutul link-ului</label>
+                    <input type="text" class="form-control" id="link_content" placeholder="Exemplu: https://makler.md/md/construction-an..." required autocomplete="off">
+                  </div>
+                    <div class="row">
+                      <div class="form-group col-md-4">
+                          <label for="link_select_cont">Cont</label>
+                          <select id="link_select_cont" class="form-control" required>
+                            <option selected>Alege</option>
+                            {% for aut in account %}
+                            <option value="{{aut.id}}">{{aut.username}}</option>
+                            {%endfor%}
+                          </select>
+                        </div>
+                        <div class="form-group col-md-4">
+                          <label for="link_select_category">Categorie</label>
+                          <select id="link_select_category" class="form-control" required>
+                            <option selected>Alege</option>
+                            {% for cat in category %}
+                            <option value="{{cat.id}}">{{cat.name}}</option>
+                            {%endfor%}
+                          </select>
+                        </div>
+                      </div>
+                  <div class="form-group">
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="link_cu_plata">
+                        <label class="form-check-label" for="link_cu_plata">
+                          Cu plata
+                        </label>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
+                      <button type="submit" class="btn btn-primary">Salvează</button>
+                  </div>
+                </form>
+          </div>
+      </div>
   </div>
-  <div class="content">
-    <div class="container_form">
-        <form id="link_add_form" action="{% url 'set_link' %}" method="get" autocomplete="off"> {% csrf_token %}
-            <input type="text" id="link_content" class="category" placeholder="link-ul aici" required>
-            <select class="form_select" name="cont" id="link_select_cont" required>
-                <option value="" style="display: none;">Alege contul</option>
-                {% for aut in account %}
-                <option value="{{aut.id}}">{{aut.username}}</option>
-                {%endfor%}
-            </select>
-            <select class="form_select" name="category" id="link_select_category" required>
-                <option value="" style="display: none;">Alege categoria</option>
-                {% for cat in category %}
-                <option value="{{cat.id}}">{{cat.name}}</option>
-                {%endfor%}
-            </select><br><br>
-            <span>Cu plata: <input id="link_cu_plata" type="checkbox" name="payment" style="display: inline;"></span>
-            <input type="submit" value="Trimite" class="submit_button" id="send_link">
-        </form>
-    </div>
-  </div>
-</div>

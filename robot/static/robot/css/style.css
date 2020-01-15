@@ -1,0 +1,29 @@
+.display_off{
+    display: none;
+}
+
+.start_link{
+    margin-right: 20px;
+}
+
+.container-fluid{
+    margin-top: 150px;
+}
+
+.category td{
+    background-color: rgb(201, 201, 201);
+}
+
+.gray{
+    background-color: rgb(201, 201, 201);
+    width: 60px;
+}
+
+.delete_button{
+    text-align: center;
+    cursor: pointer;
+}
+
+.delete_link_button:hover{
+    color: red;
+}

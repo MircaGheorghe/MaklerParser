@@ -6,10 +6,7 @@ from .forms import NameForm
 from django.http import JsonResponse
 import os
 from django.contrib.auth.decorators import login_required
-from django.core.management import call_command
 from subprocess import Popen
-import glob
-from django.conf import settings
 
 # Create your views here.
 @login_required(login_url='/admin/login/?next=/') #redirect when user is not logged in
@@ -24,13 +21,10 @@ def index(request):
         'form':NameForm(),
         })
 
-def change_text(request):
+def change_status(request):
     condition = mustPosted.objects.last()
     condition.content = not condition.content
     condition.save()
-    robot = glob.glob('manage.py')
-    env = os.environ
-    print(robot)
     if condition.content == True:
         proc = Popen(['python manage.py robot'], shell=True)
     data = {
@@ -41,8 +35,8 @@ def change_text(request):
 
 
 
-# Functie pentru a salva o nou categorie in baza de date
-def set_category_table(request):
+# Salveaza o noua categorie in baza de date
+def set_category(request):
     cont = request.GET.get('rez', None)
     cat_name = request.GET.get('name', None)
     categorys = Category()
@@ -53,7 +47,7 @@ def set_category_table(request):
 
 
 
-# Functie pentru a salva o nou categorie in baza de date/reinnoirea modalului
+#Salveaza un nou cont in baza de date
 def set_account(request):
     login = request.GET.get('login', None)
     password = request.GET.get('pass', None)
@@ -67,7 +61,7 @@ def set_account(request):
     return HttpResponse(status = 200)
 
 
-
+# Sllveaza un nou link a unui post in baza de date
 def set_link(request):
     link = request.GET.get('link', None)
     cont = request.GET.get('cont', None)
@@ -102,8 +96,14 @@ def get_table(request):
         'form':NameForm(),
         })
 
-def delete_link(request):
+
+def delete_link_cat(request):
     id = request.GET.get('id', None)
-    Link.objects.filter(id=id).delete()
+    if(id[-1] == 'c'):
+        id = id[:-1]
+        Category.objects.filter(id=id).delete()
+    if(id[-1] == 'l'):
+        id = id[:-1]
+        Link.objects.filter(id=id).delete()
 
     return HttpResponse(200)
