@@ -1,25 +1,36 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from django.template import loader
-from robot.models import *
-from .forms import NameForm
 from django.http import JsonResponse
-import os
-from django.contrib.auth.decorators import login_required
+from django.template import loader
 from subprocess import Popen
+from .forms import NameForm
+from robot.models import *
+import os
 
 # Create your views here.
 @login_required(login_url='/admin/login/?next=/') #redirect when user is not logged in
 def index(request):
+    user = request.user
+    accounts = user.account_user.all
     return render(request, 'robot/index.html', {
         'account': Account.objects.all(),
         'category': Category.objects.all(),
         'links':Link.objects.all(),
         'is_work': mustPosted.objects.last(),
         'users': User.objects.all(),
-        'current_user': request.user.id,
+        'current_user': user.id,
+        'account':accounts,
         'form':NameForm(),
         })
+
+
+
+def page_logout(request):
+    logout(request)
+    return redirect('home')
+
 
 def change_status(request):
     condition = mustPosted.objects.last()
@@ -81,6 +92,22 @@ def set_link(request):
     return HttpResponse(200)
 
 
+def delete_acc(request):
+    id = request.GET.get('id', None)
+    Account.objects.filter(id=id).delete()
+    return HttpResponse(200)
+
+def delete_link_cat(request):
+    id = request.GET.get('id', None)
+    if(id[-1] == 'c'):
+        id = id[:-1]
+        Category.objects.filter(id=id).delete()
+    if(id[-1] == 'l'):
+        id = id[:-1]
+        Link.objects.filter(id=id).delete()
+
+    return HttpResponse(200)
+
 
 def get_modal(request):
     return render(request, 'robot/modal_link.html', {
@@ -96,14 +123,9 @@ def get_table(request):
         'form':NameForm(),
         })
 
+def get_acc_modal(request):
+    return render(request, 'robot/modal_get_acc.html', {
+        'account': Account.objects.all(),
+        'category': Category.objects.all(),
+        })
 
-def delete_link_cat(request):
-    id = request.GET.get('id', None)
-    if(id[-1] == 'c'):
-        id = id[:-1]
-        Category.objects.filter(id=id).delete()
-    if(id[-1] == 'l'):
-        id = id[:-1]
-        Link.objects.filter(id=id).delete()
-
-    return HttpResponse(200)

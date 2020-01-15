@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load robot_extras %}
     {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -38,7 +37,7 @@
                 {% else %}
                 <button class="btn btn-succes my-2 my-sm-0 start_link" type="button">Activ</button>
               {%endif%}
-            <button class="btn btn-primary my-2 my-sm-0" type="button">Log-out</button>
+            <button class="btn btn-primary my-2 my-sm-0" type="button" id="logout_button">Log-out</button>
           </form>
         </div>
       </nav>
@@ -59,7 +58,7 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="alert alert-success display_off" role="alert">
+                <div class="alert alert-success display_off animated" role="alert">
                   Datele au fost trimise
                 </div>
                 <div class="modal-body">
@@ -106,6 +105,7 @@
                         </div>
                         <input type="hidden" id="curent_user" value="{{ current_user }}">
                         <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-toggle="modal" data-dismiss="modal" data-target="#get_all_accounts">Vezi toate conturile</button>
                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
                           <button type="submit" class="btn btn-primary">Salvează</button>
                       </div>
@@ -125,17 +125,25 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Stergere</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <div class="modal-body">
+            <h5 class="modal-title" id="exampleModalLabel">Stergere</h5>
+          </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Nu</button>
-            <button type="button" class="btn btn-primary yes_delete" data-id="">Da</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Închide</button>
+            <button type="button" class="btn btn-primary yes_delete" data-id="" data-dismiss="modal">Da</button>
           </div>
         </div>
       </div>
+    </div>
+
+
+    <!-- Modal pentru vizualizarea tuturor conturilor si stergere -->
+    <div class="modal fade" id="get_all_accounts" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    {% include 'robot/modal_get_acc.html'%}
     </div>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script src="{% static 'robot/scripts/script.js' %}"></script>

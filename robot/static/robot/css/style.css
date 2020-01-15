@@ -19,11 +19,12 @@
     width: 60px;
 }
 
-.delete_button{
+.red{
+    transition: color .3s;
     text-align: center;
     cursor: pointer;
 }
 
-.delete_link_button:hover{
+.red:hover{
     color: red;
 }

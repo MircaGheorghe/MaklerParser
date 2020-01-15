@@ -50,7 +50,6 @@ $(document).on("submit", "#category_add_form", function (e) {
   login = $("#cont_login").val();
   pass = $("#cont_pass").val();
   author = $("#curent_user").val();
-  alert(author);
   $.ajax({
     url: '/set_account',
     data: {
@@ -62,6 +61,7 @@ $(document).on("submit", "#category_add_form", function (e) {
       $('.alert').toggleClass('display_off');
       setTimeout(hide_alert, 2000);
       get_modal();
+      get_acc_modal();
     }
   });
   $('#cont_login').val('');
@@ -101,7 +101,7 @@ $(document).on('click', '.delete_button', function() {
 
 
 
-//stergerea unui link
+//stergerea unui link/categorie
 $(document).on("click", ".yes_delete" ,function () {
   id = $(this).data("id");
 $.ajax({
@@ -113,8 +113,36 @@ $.ajax({
     get_table();
     get_modal();
   }
+  });
 });
+
+
+$(document).on("click", ".delete_acc" ,function () {
+  id = $(this).attr('id');
+$.ajax({
+  url: '/delete_acc',
+  data: {
+      "id" : id,
+  },
+  success: function (data) {
+    get_acc_modal();
+    get_modal();
+  }
+  });
 });
+
+$(document).on("click", "#logout_button" ,function () {
+  id = $(this).attr('id');
+$.ajax({
+  url: '/logout',
+  data: {
+  },
+  success: function (data) {
+    window.location.replace('/admin/login/');
+  }
+  });
+});
+
 
 
 function get_modal(){
@@ -131,6 +159,15 @@ function get_table(){
     url: '/get_table',
     success: function (data) {
       $('.container-fluid').html(data)
+    }
+  });
+}
+
+function get_acc_modal(){
+  $.ajax({
+    url: '/get_acc_modal',
+    success: function (data) {
+      $('#get_all_accounts').html(data)
     }
   });
 }

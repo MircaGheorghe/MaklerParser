@@ -50,7 +50,6 @@ $(document).on("submit", "#category_add_form", function (e) {
   login = $("#cont_login").val();
   pass = $("#cont_pass").val();
   author = $("#curent_user").val();
-  alert(author);
   $.ajax({
     url: '/set_account',
     data: {
@@ -101,7 +100,7 @@ $(document).on('click', '.delete_button', function() {
 
 
 
-//stergerea unui link
+//stergerea unui link/categorie
 $(document).on("click", ".yes_delete" ,function () {
   id = $(this).data("id");
 $.ajax({
@@ -111,9 +110,26 @@ $.ajax({
   },
   success: function (data) {
     get_table();
+    get_modal();
   }
 });
 });
+
+
+$(document).on("click", ".delete_acc" ,function () {
+  id = $(this).attr('id');
+$.ajax({
+  url: '/delete_acc',
+  data: {
+      "id" : id,
+  },
+  success: function (data) {
+    get_acc_modal();
+    get_modal();
+  }
+});
+});
+
 
 
 function get_modal(){
@@ -134,6 +150,15 @@ function get_table(){
   });
 }
 
+function get_acc_modal(){
+  $.ajax({
+    url: '/get_acc_modal',
+    success: function (data) {
+      $('#get_all_accounts').html(data)
+    }
+  });
+}
+
 function hide_alert() {
-  $('.alert').toggleClass('display_off');
+  $('.alert').addClass('display_off');
 }
