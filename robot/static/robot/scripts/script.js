@@ -111,6 +111,7 @@ $.ajax({
   },
   success: function (data) {
     get_table();
+    get_modal();
   }
 });
 });
@@ -135,5 +136,5 @@ function get_table(){
 }
 
 function hide_alert() {
-  $('.alert').toggleClass('display_off');
+  $('.alert').addClass('display_off');
 }
