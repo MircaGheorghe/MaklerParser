@@ -34,4 +34,6 @@ def get_last_phone(cat):
         if Account.objects.filter(username__contains=first).exists(): #Daca numarul exista in baza de date,
             return False
         return True
+    else:
+        return True
     return False
