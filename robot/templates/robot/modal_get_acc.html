@@ -19,7 +19,7 @@
                 <tbody>
                 {% for acc in account %}
                   <tr>
-                    <th scope="row">{{forloop.counter}}</th>
+                    <th width="40px">{{forloop.counter}}</th>
                     <td>{{acc.username}}</td>
                     <td width="40px"><span class="red delete_acc" id="{{acc.id}}"><i class="fa fa-trash-o" style="font-size:24px"></span></i></td>
                   </tr>
