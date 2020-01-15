@@ -61,6 +61,7 @@ $(document).on("submit", "#category_add_form", function (e) {
       $('.alert').toggleClass('display_off');
       setTimeout(hide_alert, 2000);
       get_modal();
+      get_acc_modal();
     }
   });
   $('#cont_login').val('');
@@ -112,7 +113,7 @@ $.ajax({
     get_table();
     get_modal();
   }
-});
+  });
 });
 
 
@@ -127,7 +128,19 @@ $.ajax({
     get_acc_modal();
     get_modal();
   }
+  });
 });
+
+$(document).on("click", "#logout_button" ,function () {
+  id = $(this).attr('id');
+$.ajax({
+  url: '/logout',
+  data: {
+  },
+  success: function (data) {
+    window.location.replace('/admin/login/');
+  }
+  });
 });
 
 
