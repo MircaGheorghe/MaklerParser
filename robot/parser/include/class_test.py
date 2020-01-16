@@ -153,6 +153,7 @@ class pasteMakler:
             print('esti pe local, chromedriver')
 
         self.driver.get("https://makler.md/")
+        self.driver.get_screenshot_as_file('screenshots/gePageScreen.png')
         print("a intrat pe site")
         try:
             self.driver.find_element_by_class_name('ui-icon-closethick').click()
