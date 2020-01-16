@@ -329,9 +329,9 @@ class pasteMakler:
             self.driver.find_element_by_id(phone).click()
             self.driver.find_element_by_class_name('saveBtn').click()
             print("dsadasd")
+        except:
             self.driver.find_element_by_id('confirm_dialog').find_element_by_class_name('buttons').find_element_by_tag_name(a).click()
             print("dsaddncvnbncvbncvbn")
-        except:
             self.driver.get_screenshot_as_file('screenshots/postare.png')
 
     def quit_driver(self):
