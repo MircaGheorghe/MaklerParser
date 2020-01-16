@@ -18,7 +18,10 @@ class Command(BaseCommand):
             'accept' : 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
             'user-agent' : 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36'
         }
-        f = open("/home/makler-publication/demofile2.txt", "w")
+        try:
+            f = open("/home/makler-publication/demofile2.txt", "w")
+        except:
+            f = open("demofile2.txt", "w")
         start = time.time()
         for cat in Category.objects.all():
             cont = mustPosted.objects.last()
@@ -30,7 +33,7 @@ class Command(BaseCommand):
                     continue
                 l = links[0].account
                 f.write(str(links[0].content) + str(datetime.now()) + '\n' + str(cat.content))
-                if not func.get_last_phone(cat.content):
+                if func.get_last_phone(cat.content):
                     continue
                 print("Link-ul a trecut validarea, poate fi postat")
                 pasteMakler = test.pasteMakler(l.username, l.password)

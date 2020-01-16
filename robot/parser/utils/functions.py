@@ -4,11 +4,14 @@ from datetime import timedelta
 import requests
 import urllib.request
 from bs4 import BeautifulSoup as bs
+from django.db.models import Q
 
 
 def get_valid_links(cat):
+    # Aici fa asa ca sa se posteze cele care sunt noi, adica fara data si ora
     date_24h = datetime.now() - timedelta(hours=24)
-    links = Link.objects.filter(category=cat, post_date__lt = date_24h)
+    links = Link.objects.filter(Q(post_date__lt = date_24h) | Q(post_date = None), category=cat)
+    print(links)
     if links:
         return links
     if Link.objects.filter(category=cat, payment=True, posted=False).exists():
@@ -32,8 +35,8 @@ def get_last_phone(cat):
     print(first)
     if not len(first.split(',')) > 1: #Daca este un singur numar, merge mai departe
         if Account.objects.filter(username__contains=first).exists(): #Daca numarul exista in baza de date,
-            return False
-        return True
+            return True
+        return False
     else:
-        return True
-    return False
+        return False
+    return True

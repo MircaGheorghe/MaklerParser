@@ -139,11 +139,21 @@ class getMakler:
 class pasteMakler:
     def __init__(self, user_name, password):
         chrome_options = Options()
-        chrome_options.add_argument('--headless')
-        chrome_options.add_argument('--disable-gpu')
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--disable-dev-shm-usage')
-        self.driver = webdriver.Chrome("/usr/bin/chromedriver", options=chrome_options)
+        try:
+            chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--disable-gpu')
+            chrome_options.add_argument('--no-sandbox')
+            chrome_options.add_argument('--disable-dev-shm-usage')
+            self.driver = webdriver.Chrome("/usr/bin/chromedriver", options=chrome_options)
+        except:
+            chrome_options.add_argument('--headless')
+            chrome_options.add_argument('--disable-gpu')
+            self.driver = webdriver.Chrome("C:\Program Files (x86)\Google\Chrome\Application\chromedriver")
+        try:
+            self.driver.get("https://makler.md/md/")
+            self.driver.find_element_by_class_name('ui-icon-closethick').click()
+        except:
+            pass
         self.driver.get("https://makler.md/md/")
         self.driver.implicitly_wait(3)
         self.driver.find_element_by_id('logInDiv').click()

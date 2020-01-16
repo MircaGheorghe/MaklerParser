@@ -37,7 +37,10 @@ def change_status(request):
     condition.content = not condition.content
     condition.save()
     if condition.content == True:
-        proc = Popen(['python manage.py robot'], shell=True)
+        try:
+            proc = Popen(['python manage.py robot'], shell=True)
+        except:
+            os.system('python manage.py robot')
     data = {
         'status': condition.content
     }
