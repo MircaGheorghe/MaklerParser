@@ -145,21 +145,27 @@ class pasteMakler:
             chrome_options.add_argument('--no-sandbox')
             chrome_options.add_argument('--disable-dev-shm-usage')
             self.driver = webdriver.Chrome("/usr/bin/chromedriver", options=chrome_options)
+            print("a primit chromdriver-ul")
         except:
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--disable-gpu')
             self.driver = webdriver.Chrome("C:\Program Files (x86)\Google\Chrome\Application\chromedriver")
+
+        self.driver.get("https://makler.md/md/")
         try:
-            self.driver.get("https://makler.md/md/")
             self.driver.find_element_by_class_name('ui-icon-closethick').click()
         except:
             pass
-        self.driver.get("https://makler.md/md/")
         self.driver.implicitly_wait(3)
+        print("a asteptat 3 secunde")
         self.driver.find_element_by_id('logInDiv').click()
+        print("a apasat pe butonul de logare")
         self.driver.find_element_by_name('login').send_keys(user_name, Keys.ARROW_DOWN)
+        print('a introdus loginul')
         self.driver.find_element_by_name('password').send_keys(password)
+        print('a introdus parola')
         self.driver.find_element_by_class_name("popupRedButton").click()
+        print('sa logat')
 
 
     def change_location(self, location):
