@@ -154,7 +154,6 @@ class pasteMakler:
         self.driver.get('https://makler.md')
         self.driver.get_screenshot_as_file('screenshots/getAfterPageScreen.png')
         print("a intrat pe site")
-
         self.driver.find_element_by_class_name('ui-icon-closethick').click()
         self.driver.implicitly_wait(3)
         print("a asteptat 3 secunde")
