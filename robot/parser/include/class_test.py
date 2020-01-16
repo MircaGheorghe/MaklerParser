@@ -142,7 +142,7 @@ class pasteMakler:
         try:
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--disable-gpu')
-            # chrome_options.add_argument('--no-sandbox')
+            chrome_options.add_argument('--no-sandbox')
             chrome_options.add_argument('--disable-dev-shm-usage')
             self.driver = webdriver.Chrome("/usr/bin/chromedriver", options=chrome_options)
         except:
