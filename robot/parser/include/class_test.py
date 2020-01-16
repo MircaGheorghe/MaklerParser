@@ -154,7 +154,8 @@ class pasteMakler:
         self.driver.get('https://makler.md')
         self.driver.get_screenshot_as_file('screenshots/getAfterPageScreen.png')
         print("a intrat pe site")
-        self.driver.implicitly_wait(3)
+        # self.driver.implicitly_wait(2)
+        sleep(2)
         print("a asteptat 3 secunde")
 
         try:
