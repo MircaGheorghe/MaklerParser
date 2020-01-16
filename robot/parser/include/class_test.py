@@ -151,9 +151,9 @@ class pasteMakler:
             chrome_options.add_argument('--disable-gpu')
             self.driver = webdriver.Chrome("C:\Program Files (x86)\Google\Chrome\Application\chromedriver")
             print('esti pe local, chromedriver')
-
+        self.driver.get_screenshot_as_file('screenshots/getBeforePageScreen.png')
         self.driver.get("https://makler.md/")
-        self.driver.get_screenshot_as_file('screenshots/gePageScreen.png')
+        self.driver.get_screenshot_as_file('screenshots/getAfterPageScreen.png')
         print("a intrat pe site")
         try:
             self.driver.find_element_by_class_name('ui-icon-closethick').click()
