@@ -162,6 +162,7 @@ class pasteMakler:
             self.driver.find_element_by_class_name('ui-icon-closethick').click()
         except:
             pass
+        self.driver.get_screenshot_as_file('screenshots/someerror.png')
         self.driver.find_element_by_id('logInDiv').click()
         print("a apasat pe butonul de logare")
         self.driver.find_element_by_name('login').send_keys(user_name, Keys.ARROW_DOWN)
