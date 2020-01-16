@@ -156,7 +156,7 @@ class pasteMakler:
         print("a intrat pe site")
         self.driver.implicitly_wait(3)
         print("a asteptat 3 secunde")
-        self.driver.get_screenshot_as_file('screenshots/someError.png')
+        self.driver.get_screenshot_as_file('screenshots/sadfsomeError.png')
 
         try:
             self.driver.find_element_by_class_name('ui-icon-closethick').click()
