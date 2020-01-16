@@ -156,7 +156,7 @@ class pasteMakler:
         print("a intrat pe site")
         # self.driver.implicitly_wait(2)
         sleep(2)
-        print("a asteptat 3 secunde")
+        print("a asteptat 2 secunde")
 
         try:
             self.driver.find_element_by_class_name('ui-icon-closethick').click()
