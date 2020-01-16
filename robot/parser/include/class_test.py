@@ -145,13 +145,14 @@ class pasteMakler:
             chrome_options.add_argument('--no-sandbox')
             chrome_options.add_argument('--disable-dev-shm-usage')
             self.driver = webdriver.Chrome("/usr/bin/chromedriver", options=chrome_options)
-            print("a primit chromdriver-ul")
         except:
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--disable-gpu')
             self.driver = webdriver.Chrome("C:\Program Files (x86)\Google\Chrome\Application\chromedriver")
 
+        print("a primit chromdriver-ul")
         self.driver.get("https://makler.md/md/")
+        print("a intrat pe site")
         try:
             self.driver.find_element_by_class_name('ui-icon-closethick').click()
         except:
