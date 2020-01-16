@@ -152,7 +152,7 @@ class pasteMakler:
             self.driver = webdriver.Chrome("C:\Program Files (x86)\Google\Chrome\Application\chromedriver")
             print('esti pe local, chromedriver')
 
-        self.driver.get("https://www.google.md/")
+        self.driver.get("https://makler.md/")
         print("a intrat pe site")
         try:
             self.driver.find_element_by_class_name('ui-icon-closethick').click()
