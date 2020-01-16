@@ -208,24 +208,25 @@ class pasteMakler:
 
 
     def complete_price(self, post_price, currency):
-        if post_price != None and currency != None:
-            element = self.driver.find_element_by_id("price")
-            element.send_keys(post_price)
+        try:
+            if post_price != None and currency != None:
+                element = self.driver.find_element_by_id("price")
+                element.send_keys(post_price)
 
-            curency_tab = {
-                '$':'USD',
-                '₴':'UAH',
-                '€':'EUR',
-                'Lei':'MDL'
-            }
-            sleep(1)
-            if currency in curency_tab.keys():
-                get_currency_div = self.driver.find_elements_by_class_name('newAdForm_radioBoxButtons')[1]
-                elements = get_currency_div.find_elements_by_tag_name('label')
-                for element in elements:
-                    if element.text == curency_tab[currency]:
-                        element.click()
-        else:
+                curency_tab = {
+                    '$':'USD',
+                    '₴':'UAH',
+                    '€':'EUR',
+                    'Lei':'MDL'
+                }
+                sleep(1)
+                if currency in curency_tab.keys():
+                    get_currency_div = self.driver.find_elements_by_class_name('newAdForm_radioBoxButtons')[1]
+                    elements = get_currency_div.find_elements_by_tag_name('label')
+                    for element in elements:
+                        if element.text == curency_tab[currency]:
+                            element.click()
+        except:
             self.driver.get_screenshot_as_file('screenshots/valuta.png')
 
 
