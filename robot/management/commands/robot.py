@@ -78,5 +78,5 @@ class Command(BaseCommand):
                     result = end - start
                     print(result)
                     f.close()
-                    sleep(3)
                 print("a fost oprit")
+            sleep(3)
