@@ -69,13 +69,13 @@ class Command(BaseCommand):
                     phone = "phone-" + l.username
                     pasteMakler.paste_post(phone)
                     print("A postat")
-                    Link.objects.update(posted=True)
-                    Link.objects.update(post_date=datetime.now())
+                    Link.objects.filter(content=link[0]).update(posted=True)
+                    Link.objects.filter(content=link[0]).update(post_date=datetime.now())
                     pasteMakler.quit_driver()
 
                     end = time.time()
                     result = end - start
                     print(result)
                     f.close()
-                sleep(3)
+                    sleep(3)
                 print("a fost oprit")
