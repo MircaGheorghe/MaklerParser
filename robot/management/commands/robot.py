@@ -29,11 +29,12 @@ class Command(BaseCommand):
                 if is_work.content:
                     links = func.get_valid_links(cat)
                     print("Au fost verificate link-urile")
+                    print(links)
                     if not links:
                         print("Nu sunt link-uri care au trecut validarea")
                         continue
                     l = links[0].account
-                    f.write(str(links[0].content) + str(datetime.now()) + '\n' + str(cat.content))
+                    # f.write(str(links[0].content) + str(datetime.now()) + '\n' + str(cat.content))
                     if func.get_last_phone(cat.content):
                         continue
                     print("Link-ul a trecut validarea, poate fi postat")
@@ -69,8 +70,8 @@ class Command(BaseCommand):
                     phone = "phone-" + l.username
                     pasteMakler.paste_post(phone)
                     print("A postat")
-                    Link.objects.filter(content=link[0]).update(posted=True)
-                    Link.objects.filter(content=link[0]).update(post_date=datetime.now())
+                    Link.objects.filter(content=links[0].content).update(posted=True)
+                    Link.objects.filter(content=links[0].content).update(post_date=datetime.now())
                     pasteMakler.quit_driver()
 
                     end = time.time()

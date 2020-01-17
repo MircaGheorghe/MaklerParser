@@ -11,7 +11,6 @@ def get_valid_links(cat):
     # Aici fa asa ca sa se posteze cele care sunt noi, adica fara data si ora
     date_24h = datetime.now() - timedelta(hours=24)
     links = Link.objects.filter(Q(post_date__lt = date_24h) | Q(post_date = None), category=cat)
-    print(links)
     if links:
         return links
     if Link.objects.filter(category=cat, payment=True, posted=False).exists():
