@@ -357,6 +357,6 @@ class pasteMakler:
         except:
             self.driver.get_screenshot_as_file('screenshots/postare.png')
 
-    # def quit_driver(self):
-    #     self.driver.quit()
+    def quit_driver(self):
+        self.driver.quit()
 
