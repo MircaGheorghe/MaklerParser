@@ -84,10 +84,15 @@ class getMakler:
 
     def get_specification(self):
         try:
-            uls = self.soup.find_all('ul', attrs={'class': 'itemtable box-columns'})
+            try:
+                uls = self.soup.find_all('ul', attrs={'class': 'itemtable box-columns'})
+            except:
+                uls = self.soup.find_all('ul', attrs={'class': 'itemtable'})
             self.specifications = {}
             for ul in uls:
                 for li in ul.find_all('li'):
+                    #aici nu gaseste probabil dupa id
+                    print("in ")
                     title = li.find("div", attrs={"class": "fields"}).text.strip()
                     value = li.find("div", attrs={"class": "values"}).text.strip()
                     self.specifications[title] = value
@@ -245,6 +250,7 @@ class pasteMakler:
 
 
     def complete_specification(self, specifications):
+        print(specifications)
         if specifications != False:
             element = self.driver.find_element_by_class_name('zend_form')
             #variabila ce contine elementele de pe pagina de incarcare a datelor
@@ -254,12 +260,19 @@ class pasteMakler:
 
             #fell of the category inputs
             for label in labels:
+                print(label)
+                print('prim ^^')
                 for key in keys:
+                    print(key)
+                    print('a doilea ^^')
                     if key in label.text or key == label.text:
                         li = label.find_element_by_xpath('..')
+                        print(li.text)
+                        print('trei ^')
                         select_ = li.find_elements_by_tag_name('select')
                         optgroup = li.find_elements_by_tag_name('optgroup')
                         if select_:
+                            print('slect')
                             try:
                                 li.find_element_by_xpath("//select/optgroup/option[text()='" + specifications[key] +"']").click()
                             except:
@@ -267,12 +280,15 @@ class pasteMakler:
                             break
 
                         if li.find_elements_by_css_selector("input[type='text']"):
+                            print('textbox')
                             data = specifications[key].replace('cm', '')
                             data = data.replace('ari', '')
                             data = data.replace('m²', '').strip()
                             li.find_element_by_css_selector("input[type='text']").send_keys(data)
                             break
+
                         if li.find_elements_by_css_selector("input[type='checkbox']"):
+                            print('checkbox')
                             additional = ['Încălzire', 'Electricitate', 'Apă', 'Telefon, TV, internet', 'Suplimentar', 'Lângă casă']
                             for add in additional:
                                 if add in specifications.keys():
@@ -280,6 +296,9 @@ class pasteMakler:
                                     data = data.split(',')
                                     for elem in data:
                                         li.find_element_by_xpath('//label[contains(text(), "' + elem.strip() + '")]').click()
+                            for spec in specifications.keys():
+                                if specifications[spec] == '✔':
+                                    li.find_element_by_xpath('//label[contains(text(), "' + spec.strip() + '")]').click()
 
         else:
             self.driver.get_screenshot_as_file('screenshots/specificatiile.png')
@@ -298,33 +317,39 @@ class pasteMakler:
             arr = proposal.split(', ')
         except:
             arr.append(proposal)
-
-        if len(arr) > 1:
-            div = self.driver.find_element_by_id('kind')
-            if arr[0] == "vând":
-                div.find_elements_by_tag_name('label')[0].click()
+        try:
+            if len(arr) > 1:
+                div = self.driver.find_element_by_id('kind')
+                if arr[0] == "vând":
+                    div.find_elements_by_tag_name('label')[0].click()
+                    div = self.driver.find_element_by_id('newAdForm_isForChangeBox')
+                    div.find_element_by_tag_name('label').click()
+                    return
+                div.find_elements_by_tag_name('label')[1].click()
                 div = self.driver.find_element_by_id('newAdForm_isForChangeBox')
                 div.find_element_by_tag_name('label').click()
                 return
+            div = self.driver.find_element_by_id('kind')
+            if proposal == "vând":
+                div.find_elements_by_tag_name('label')[0].click()
+                return
             div.find_elements_by_tag_name('label')[1].click()
-            div = self.driver.find_element_by_id('newAdForm_isForChangeBox')
-            div.find_element_by_tag_name('label').click()
-            return
-        div = self.driver.find_element_by_id('kind')
-        if proposal == "vând":
-            div.find_elements_by_tag_name('label')[0].click()
-            return
-        div.find_elements_by_tag_name('label')[1].click()
+        except:
+            pass
 
     def get_last_load_image(self):
-        element = self.driver.find_element_by_id('files_list')
-        img = element.find_elements_by_tag_name('li')[0].find_element_by_tag_name('label').find_element_by_tag_name("span").get_attribute("style")
-        if img == "display: none;":
-            return True
-        return False
+        try:
+            element = self.driver.find_element_by_id('files_list')
+            img = element.find_elements_by_tag_name('li')[0].find_element_by_tag_name('label').find_element_by_tag_name("span").get_attribute("style")
+            if img == "display: none;":
+                return True
+            return False
+        except:
+            pass
 
 
     def paste_post(self, phone):
+        sleep(2)
         self.driver.find_element_by_id(phone).click()
         self.driver.find_element_by_class_name('saveBtn').click()
         try:
@@ -332,6 +357,6 @@ class pasteMakler:
         except:
             self.driver.get_screenshot_as_file('screenshots/postare.png')
 
-    def quit_driver(self):
-        self.driver.quit()
+    # def quit_driver(self):
+    #     self.driver.quit()
 

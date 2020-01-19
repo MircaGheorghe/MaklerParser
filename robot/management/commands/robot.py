@@ -56,10 +56,12 @@ class Command(BaseCommand):
                     print("A setat tipul propunerii")
                     pasteMakler.complete_price(getMakler.get_post_price_currency()[0], getMakler.get_post_price_currency()[1])
                     print("A postat pretul si valuta")
-                    pasteMakler.check_ipoteca(getMakler.get_ipoteca())
+                    # pasteMakler.check_ipoteca(getMakler.get_ipoteca())
                     print("A verificat de ipoteca")
                     pasteMakler.upload_images(getMakler.get_images())
                     print("A postat imaginile")
+                    print("------------------asdasdasdas")
+                    print(getMakler.specifications)
                     pasteMakler.complete_specification(getMakler.specifications)
                     print("A completat specificatiile")
 
