@@ -44,7 +44,7 @@ def change_status(request):
         print(5, '!!!!!!!!!!!!')
         try:
             print(6, '!!!!!!!!!!!!')
-            proc = Popen(["python manage.py robot"], shell=True)
+            proc = Popen(["python", "manage.py", "robot"], shell=True)
         except:
             print(7, '!!!!!!!!!!!!')
             os.system("python manage.py robot")
