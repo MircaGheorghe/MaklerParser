@@ -12,6 +12,7 @@ import os
 # Create your views here.
 @login_required(login_url='/admin/login/?next=/') #redirect when user is not logged in
 def index(request):
+    print('INDEX HOME')
     user = request.user
     accounts = user.account_user.all
     return render(request, 'robot/index.html', {
