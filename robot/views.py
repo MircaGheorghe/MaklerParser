@@ -47,7 +47,7 @@ def change_status(request):
             proc = Popen(["python", "manage.py", "robot"], shell=True)
         except:
             print(7, '!!!!!!!!!!!!')
-            os.system("python manage.py robot")
+            proc = Popen("/home/env/bin/python /home/makler-publication/manage.py robot", shell=True)
     data = {
         "status": condition.content
     }
