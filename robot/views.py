@@ -33,16 +33,23 @@ def page_logout(request):
 
 
 def change_status(request):
+    print(1, '!!!!!!!!!!!!')
     condition = mustPosted.objects.last()
+    print(2, '!!!!!!!!!!!!')
     condition.content = not condition.content
+    print(3, '!!!!!!!!!!!!')
     condition.save()
+    print(4, '!!!!!!!!!!!!')
     if condition.content == True:
+        print(5, '!!!!!!!!!!!!')
         try:
-            proc = Popen(['python manage.py robot'], shell=True)
+            print(6, '!!!!!!!!!!!!')
+            proc = Popen(["python manage.py robot"], shell=True)
         except:
-            os.system('python manage.py robot')
+            print(7, '!!!!!!!!!!!!')
+            os.system("python manage.py robot")
     data = {
-        'status': condition.content
+        "status": condition.content
     }
     return JsonResponse(data)
 
