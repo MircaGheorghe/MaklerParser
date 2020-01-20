@@ -41,14 +41,14 @@ def change_status(request):
     print(3, '!!!!!!!!!!!!')
     condition.save()
     print(4, '!!!!!!!!!!!!')
-    # if condition.content == True:
-    #     print(5, '!!!!!!!!!!!!')
-    #     try:
-    #         print(6, '!!!!!!!!!!!!')
-    #         proc = Popen(["/home/env/bin/python /home/makler-publication/manage.py robot"], shell=True)
-    #     except:
-    #         print(7, '!!!!!!!!!!!!')
-    #         proc = Popen("/home/env/bin/python /home/makler-publication/manage.py robot", shell=True)
+    if condition.content == True:
+        print(5, '!!!!!!!!!!!!')
+        try:
+            print(6, '!!!!!!!!!!!!')
+            proc = Popen(["/home/env/bin/python /home/makler-publication/manage.py robot"], shell=True)
+        except:
+            print(7, '!!!!!!!!!!!!')
+            proc = Popen("/home/env/bin/python /home/makler-publication/manage.py robot", shell=True)
     data = {
         "status": condition.content
     }
