@@ -59,6 +59,9 @@ class getMakler:
         content = self.soup.find('div', attrs={'id': 'anText'}).text
         content = content.replace('[email protected]', '')
         n_c = '\n'.join([row.strip() for row in content.split('\n')])
+        removal_list = ['', '\t', '\n']
+        for s in removal_list:
+            n_c = n_c.replace(s, '')
         return n_c
 
     def get_categories(self):
@@ -70,6 +73,7 @@ class getMakler:
 
 
     def get_images(self): #Salveaza iamginile in folder si returneaza numarul de imagini
+        try:
             div_image = self.soup.find('div', id = "anItemData").find('div', attrs={'class': 'itmedia'})
             opener = urllib.request.build_opener()
             opener.addheaders = [('User-agent', 'Mozilla/5.0')]
@@ -80,19 +84,20 @@ class getMakler:
                 urllib.request.urlretrieve(a['href'], "img/{}.jpg".format(str(i)))
                 i += 1
             return i
+        except:
+            pass
 
 
     def get_specification(self):
         try:
             try:
-                uls = self.soup.find_all('ul', attrs={'class': 'itemtable box-columns'})
-            except:
                 uls = self.soup.find_all('ul', attrs={'class': 'itemtable'})
+            except:
+                uls = self.soup.find_all('ul', attrs={'class': 'itemtable box-columns'})
             self.specifications = {}
             for ul in uls:
                 for li in ul.find_all('li'):
                     #aici nu gaseste probabil dupa id
-                    print("in ")
                     title = li.find("div", attrs={"class": "fields"}).text.strip()
                     value = li.find("div", attrs={"class": "values"}).text.strip()
                     self.specifications[title] = value
@@ -150,32 +155,23 @@ class pasteMakler:
             chrome_options.add_argument('--no-sandbox')
             chrome_options.add_argument('--disable-dev-shm-usage')
             self.driver = webdriver.Chrome("/usr/bin/chromedriver", options=chrome_options)
-            print("esti pe server, chromedriver")
         except:
             self.driver = webdriver.Chrome("C:\Program Files (x86)\Google\Chrome\Application\chromedriver")
-            print('esti pe local, chromedriver')
 
         self.driver.get_screenshot_as_file('screenshots/getBeforePageScreen.png')
         self.driver.get('https://makler.md')
         self.driver.get_screenshot_as_file('screenshots/getAfterPageScreen.png')
-        print("a intrat pe site")
         self.driver.implicitly_wait(3)
-        print("a asteptat 3 secunde")
         self.driver.get_screenshot_as_file('screenshots/sadfsomeError.png')
 
         try:
             self.driver.find_element_by_class_name('ui-icon-closethick').click()
         except:
             pass
-        print("screen aici")
         self.driver.find_element_by_id('logInDiv').click()
-        print("a apasat pe butonul de logare")
         self.driver.find_element_by_name('login').send_keys(user_name, Keys.ARROW_DOWN)
-        print('a introdus loginul')
         self.driver.find_element_by_name('password').send_keys(password)
-        print('a introdus parola')
         self.driver.find_element_by_class_name("popupRedButton").click()
-        print('sa logat')
 
 
     def change_location(self, location):
@@ -226,31 +222,30 @@ class pasteMakler:
                 }
                 sleep(1)
                 if currency in curency_tab.keys():
-                    get_currency_div = self.driver.find_elements_by_class_name('newAdForm_radioBoxButtons')[1]
-                    elements = get_currency_div.find_elements_by_tag_name('label')
-                    for element in elements:
-                        if element.text == curency_tab[currency]:
-                            element.click()
+                    get_currency_div = self.driver.find_element_by_class_name('newAdForm_radioBoxButtons')
+                    get_currency_div.find_element_by_xpath('//label[contains(text(), "' + curency_tab[currency] + '")]').click()
         except:
             self.driver.get_screenshot_as_file('screenshots/valuta.png')
 
 
     def upload_images(self, nr_img):
-        if nr_img != False:
-            sleep(1)
-            element = self.driver.find_element_by_class_name("qq-upload-button")
+        try:
+            if nr_img != False:
+                sleep(1)
+                element = self.driver.find_element_by_class_name("qq-upload-button")
 
-            for i in range(nr_img):
-                elm = self.driver.find_element_by_xpath("//input[@type='file']")
-                dirname = os.path.dirname(__file__)
-                dirname = os.path.abspath(os.path.join(dirname, '../../../'))
-                elm.send_keys("{}/img/{}.jpg".format(dirname, i))
-        else:
-            self.driver.get_screenshot_as_file('screenshots/imaginile.png')
+                for i in range(nr_img):
+                    elm = self.driver.find_element_by_xpath("//input[@type='file']")
+                    dirname = os.path.dirname(__file__)
+                    dirname = os.path.abspath(os.path.join(dirname, '../../../'))
+                    elm.send_keys("{}/img/{}.jpg".format(dirname, i))
+            else:
+                self.driver.get_screenshot_as_file('screenshots/imaginile.png')
+        except:
+            pass
 
 
     def complete_specification(self, specifications):
-        print(specifications)
         if specifications != False:
             element = self.driver.find_element_by_class_name('zend_form')
             #variabila ce contine elementele de pe pagina de incarcare a datelor
@@ -259,46 +254,45 @@ class pasteMakler:
             keys = specifications.keys()
 
             #fell of the category inputs
+            exist = []
             for label in labels:
-                print(label)
-                print('prim ^^')
                 for key in keys:
-                    print(key)
-                    print('a doilea ^^')
                     if key in label.text or key == label.text:
                         li = label.find_element_by_xpath('..')
-                        print(li.text)
-                        print('trei ^')
                         select_ = li.find_elements_by_tag_name('select')
                         optgroup = li.find_elements_by_tag_name('optgroup')
+
+                        #selectbox
                         if select_:
-                            print('slect')
                             try:
                                 li.find_element_by_xpath("//select/optgroup/option[text()='" + specifications[key] +"']").click()
                             except:
                                 li.find_element_by_xpath("//select/option[text()='" + specifications[key] +"']").click()
                             break
 
+                        #inputbox
                         if li.find_elements_by_css_selector("input[type='text']"):
-                            print('textbox')
                             data = specifications[key].replace('cm', '')
                             data = data.replace('ari', '')
                             data = data.replace('m²', '').strip()
                             li.find_element_by_css_selector("input[type='text']").send_keys(data)
                             break
 
-                        if li.find_elements_by_css_selector("input[type='checkbox']"):
-                            print('checkbox')
-                            additional = ['Încălzire', 'Electricitate', 'Apă', 'Telefon, TV, internet', 'Suplimentar', 'Lângă casă']
-                            for add in additional:
+                        #checkbox
+                        additional = ['Încălzire', 'Electricitate', 'Apă', 'Telefon, TV, internet', 'Suplimentar', 'Lângă casă', 'Tipul de imobiliare', 'Comunicaţii', 'Intrare']
+                        for add in additional:
+                            if add not in exist:
                                 if add in specifications.keys():
                                     data = specifications[add]
                                     data = data.split(',')
+                                    exist.append(add)
                                     for elem in data:
-                                        li.find_element_by_xpath('//label[contains(text(), "' + elem.strip() + '")]').click()
-                            for spec in specifications.keys():
-                                if specifications[spec] == '✔':
-                                    li.find_element_by_xpath('//label[contains(text(), "' + spec.strip() + '")]').click()
+                                        elem = elem.strip()
+                                        li.find_element_by_xpath('//label[contains(text(), "' + elem + '")]').click()
+                        for spec in specifications.keys():
+                            spec = spec.strip()
+                            if specifications[spec] == '✔':
+                                li.find_element_by_xpath('//label[contains(text(), "' + spec + '")]').click()
 
         else:
             self.driver.get_screenshot_as_file('screenshots/specificatiile.png')
@@ -348,14 +342,14 @@ class pasteMakler:
             pass
 
 
-    def paste_post(self, phone):
-        sleep(2)
-        self.driver.find_element_by_id(phone).click()
-        self.driver.find_element_by_class_name('saveBtn').click()
-        try:
-            self.driver.find_element_by_id('confirm_dialog').find_element_by_class_name('buttons').find_element_by_tag_name(a).click()
-        except:
-            self.driver.get_screenshot_as_file('screenshots/postare.png')
+    # def paste_post(self, phone):
+    #     sleep(2)
+    #     self.driver.find_element_by_id(phone).click()
+    #     self.driver.find_element_by_class_name('saveBtn').click()
+    #     try:
+    #         self.driver.find_element_by_id('confirm_dialog').find_element_by_class_name('buttons').find_element_by_tag_name(a).click()
+    #     except:
+    #         self.driver.get_screenshot_as_file('screenshots/postare.png')
 
     def quit_driver(self):
         self.driver.quit()

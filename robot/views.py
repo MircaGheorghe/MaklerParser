@@ -41,7 +41,6 @@ def change_status(request):
     print(3, '!!!!!!!!!!!!')
     condition.save()
     print(4, '!!!!!!!!!!!!')
-    print(condition.content, '1234567890')
     if condition.content == True:
         print(5, '!!!!!!!!!!!!')
         try:
