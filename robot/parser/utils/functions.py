@@ -57,7 +57,7 @@ def start(bot, update):
     f.close()
     stop(bot, update)
 
-def send_later(link, user, date):
+def send_message(link, user, date):
     text = "Link-ul postat: {}\r\n User: {}\r\n Data: {}".format(link, user, date)
     f = open("chat_id.txt", "r")
     id = f.read()

@@ -8,6 +8,7 @@ from datetime import datetime
 from time import sleep as sleep
 from robot.models import mustPosted
 
+func.get_chat_id()
 
 class Command(BaseCommand):
     help = 'Closes the specified poll for voting'
@@ -74,7 +75,7 @@ class Command(BaseCommand):
                     Link.objects.filter(content=links[0].content).update(post_date=datetime.now())
                     pasteMakler.quit_driver()
 
-                    func.send_later(links[0].content, l.username, datetime.now())
+                    func.send_message(links[0].content, l.username, datetime.now())
                     end = time.time()
                     result = end - start
                     print(result)
