@@ -9,8 +9,6 @@ from time import sleep as sleep
 from robot.models import mustPosted
 
 
-
-
 class Command(BaseCommand):
     help = 'Closes the specified poll for voting'
     def handle(self, *args, **options):
@@ -76,6 +74,7 @@ class Command(BaseCommand):
                     Link.objects.filter(content=links[0].content).update(post_date=datetime.now())
                     pasteMakler.quit_driver()
 
+                    func.send_later(links[0].content, l.username, datetime.now())
                     end = time.time()
                     result = end - start
                     print(result)

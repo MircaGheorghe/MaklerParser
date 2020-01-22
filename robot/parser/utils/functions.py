@@ -5,6 +5,11 @@ import requests
 import urllib.request
 from bs4 import BeautifulSoup as bs
 from django.db.models import Q
+from telegram import Bot
+from telegram import Update
+from telegram.ext import Updater
+from telegram.ext import CommandHandler
+import threading
 
 
 def get_valid_links(cat):
@@ -39,3 +44,35 @@ def get_last_phone(cat):
     else:
         return False
     return True
+
+TG_TOKEN = '968634038:AAEWvIuKILZwg45H0qtNoN7qZLSv90za37M'
+bot = Bot(token=TG_TOKEN)
+updater = Updater(bot=bot)
+
+def start(bot, update):
+    update.message.reply_text('Salut {}, acum vei primi informatia despre noile postări aici.'.format(update.effective_chat.last_name))
+    print(update.message.chat_id)
+    f = open("chat_id.txt", "w")
+    f.write(str(update.message.chat_id))
+    f.close()
+    stop(bot, update)
+
+def send_later(link, user, date):
+    text = "Link-ul postat: {}\r\n User: {}\r\n Data: {}".format(link, user, date)
+    f = open("chat_id.txt", "r")
+    id = f.read()
+    bot.send_message(id, text=text)
+    f.close()
+
+def get_chat_id():
+    start_handler = CommandHandler("start", start)
+    updater.dispatcher.add_handler(start_handler)
+    updater.start_polling()
+    updater.idle()
+
+def shutdown():
+    updater.stop()
+    updater.is_idle = False
+
+def stop(bot, update):
+    threading.Thread(target=shutdown).start()

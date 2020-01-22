@@ -2,6 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from robot.parser.utils import functions as func
 from django.http import JsonResponse
 from django.template import loader
 from subprocess import Popen
@@ -12,7 +13,6 @@ import os
 # Create your views here.
 @login_required(login_url='/admin/login/?next=/') #redirect when user is not logged in
 def index(request):
-    print('INDEX HOME')
     user = request.user
     accounts = user.account_user.all
     return render(request, 'robot/index.html', {
