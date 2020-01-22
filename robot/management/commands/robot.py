@@ -8,7 +8,7 @@ from datetime import datetime
 from time import sleep as sleep
 from robot.models import mustPosted
 
-func.get_chat_id()  #cand vrei sa afli id-ul chat-ului, decomentezi aceasta functie
+func.func()
 
 class Command(BaseCommand):
     help = 'Closes the specified poll for voting'

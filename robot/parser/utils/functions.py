@@ -5,10 +5,8 @@ import requests
 import urllib.request
 from bs4 import BeautifulSoup as bs
 from django.db.models import Q
-from telegram import Bot
-from telegram import Update
-from telegram.ext import Updater
-from telegram.ext import CommandHandler
+from telegram import Bot, Update
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import threading
 
 
@@ -45,40 +43,66 @@ def get_last_phone(cat):
         return False
     return True
 
+# TG_TOKEN = '968634038:AAEWvIuKILZwg45H0qtNoN7qZLSv90za37M'
+# bot = Bot(token=TG_TOKEN)
+# updater = Updater(bot=bot)
+
+# def start(bot, update):
+#     print("sdfasdf")
+#     update.message.reply_text('Salut {}, acum vei primi informatia despre noile postări aici.'.format(update.effective_chat.last_name))
+#     # stop(bot, update)
+
+# def do_makler(bot, update):
+#     print("ddssa")
+#     text = update.message.text
+#     print(text)
+
+# # def send_message(link, user, date):
+# #     text = "Link-ul postat: {}\r\n User: {}\r\n Data: {}".format(link, user, date)
+# #     user = request.user
+# #     accounts = user.account_user.all
+# #     print(user.id)
+# #     # user = User.objects.get(first = username)
+# #     # user.username = newusername
+# #     # user.save()
+# #     bot.send_message(id, text=text)
+
+# # def send_error_message(text):
+# #     f = open("chat_id.txt", "r")
+# #     id = f.read()
+# #     bot.send_message(id, text=text)
+# #     f.close()
+# print("dasd")
+# start_handler = CommandHandler("start", start)
+# message_handler = MessageHandler(Filters.text, do_makler)
+
+# updater.dispatcher.add_handler(message_handler)
+# updater.dispatcher.add_handler(start_handler)
+
+
+# # def shutdown():
+# #     updater.stop()
+# #     updater.is_idle = False
+
+# # def stop(bot, update):
+# #     threading.Thread(target=shutdown).start()
 TG_TOKEN = '968634038:AAEWvIuKILZwg45H0qtNoN7qZLSv90za37M'
 bot = Bot(token=TG_TOKEN)
 updater = Updater(bot=bot)
 
 def start(bot, update):
-    update.message.reply_text('Salut {}, acum vei primi informatia despre noile postări aici.'.format(update.effective_chat.last_name))
-    print(update.message.chat_id)
-    f = open("chat_id.txt", "w")
-    f.write(str(update.message.chat_id))
-    f.close()
-    stop(bot, update)
+    update.message.reply_text('Hello {}!'.format(update.effective_chat.first_name))
 
-def send_message(link, user, date):
-    text = "Link-ul postat: {}\r\n User: {}\r\n Data: {}".format(link, user, date)
-    f = open("chat_id.txt", "r")
-    id = f.read()
-    bot.send_message(id, text=text)
-    f.close()
+def do_makler(bot, update):
+    text = update.message.text
+    print(text)
 
-def send_error_message(text):
-    f = open("chat_id.txt", "r")
-    id = f.read()
-    bot.send_message(id, text=text)
-    f.close()
 
-def get_chat_id():
-    start_handler = CommandHandler("start", start)
-    updater.dispatcher.add_handler(start_handler)
-    updater.start_polling()
-    updater.idle()
+start_handler = CommandHandler("start", start)
+message_handler = MessageHandler(Filters.text, do_makler)
 
-def shutdown():
-    updater.stop()
-    updater.is_idle = False
+updater.dispatcher.add_handler(message_handler)
+updater.dispatcher.add_handler(start_handler)
 
-def stop(bot, update):
-    threading.Thread(target=shutdown).start()
+updater.start_polling()
+updater.idle()

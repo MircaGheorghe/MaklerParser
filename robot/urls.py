@@ -14,4 +14,5 @@ urlpatterns = [
     path('get_modal', views.get_modal, name='get_modal'),
     path('get_table', views.get_table, name='get_table'),
     path('get_acc_modal', views.get_acc_modal, name='get_acc_modal'),
+    path('get_chat_id', views.get_chat_id, name='get_chat_id'),
 ]

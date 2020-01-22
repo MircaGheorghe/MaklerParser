@@ -175,3 +175,12 @@ function get_acc_modal(){
 function hide_alert() {
   $('.alert').addClass('display_off');
 }
+
+function get_chat_id() {
+  $.ajax({
+  url: '/get_chat_id',
+  data: {
+  },
+  success: function (data) {}
+  });
+}

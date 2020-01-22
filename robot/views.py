@@ -140,3 +140,7 @@ def get_acc_modal(request):
         'category': Category.objects.all(),
         })
 
+def get_chat_id(request):
+    func.get_chat_id()
+    return HttpResponse(200)
+
