@@ -64,6 +64,12 @@ def send_message(link, user, date):
     bot.send_message(id, text=text)
     f.close()
 
+def send_error_message(text):
+    f = open("chat_id.txt", "r")
+    id = f.read()
+    bot.send_message(id, text=text)
+    f.close()
+
 def get_chat_id():
     start_handler = CommandHandler("start", start)
     updater.dispatcher.add_handler(start_handler)

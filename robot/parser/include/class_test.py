@@ -5,6 +5,7 @@ from time import sleep as sleep
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.chrome.options import Options
+from robot.parser.utils import functions as func
 import re
 from datetime import datetime
 import os
@@ -19,16 +20,19 @@ class getMakler:
             if request.status_code == 200:
                 self.soup = bs(request.content, 'html.parser')
         except:
-            print("Eroare")
+            pass
         self.get_specification()
 
 
     def get_general_information(self): #Get title, price, currency, content, city, phone
-        div_header = self.soup.find_all('div', attrs={'class': 'title clrfix'})
-        post_title = div_header[0].find('strong', attrs={'id': 'anNameData'}).text
-        phone = self.soup.find("ul", attrs={'class', 'hlist clrfix'}).text.strip()
-        self.city = self.soup.find('div', attrs={'class', 'item_title_info'}).find_all('span')[0].text
-        return post_title, self.city, phone
+        try:
+            div_header = self.soup.find_all('div', attrs={'class': 'title clrfix'})
+            post_title = div_header[0].find('strong', attrs={'id': 'anNameData'}).text
+            phone = self.soup.find("ul", attrs={'class', 'hlist clrfix'}).text.strip()
+            self.city = self.soup.find('div', attrs={'class', 'item_title_info'}).find_all('span')[0].text
+            return post_title, self.city, phone
+        except:
+            pass
 
     def get_post_price_currency(self):
         try:
@@ -49,27 +53,36 @@ class getMakler:
 
 
     def get_region(self):
-        city_transnistria = ['Tiraspol', 'Bender', 'Râbniţa', 'Blijinii Hutor', 'Grigoriopol', 'Dnestrovsc','Dubăsari', 'Camenca', 'Maiac', 'Tiraspolul Nou', 'Parcani', 'Dnestrovsc','Первомайск', 'Slobozia','Sucleia','Ternovca']
-        region = "Moldova"
-        if self.city in city_transnistria:
-            region = "Transnistria"
-        return region
+        try:
+            city_transnistria = ['Tiraspol', 'Bender', 'Râbniţa', 'Blijinii Hutor', 'Grigoriopol', 'Dnestrovsc','Dubăsari', 'Camenca', 'Maiac', 'Tiraspolul Nou', 'Parcani', 'Dnestrovsc','Первомайск', 'Slobozia','Sucleia','Ternovca']
+            region = "Moldova"
+            if self.city in city_transnistria:
+                region = "Transnistria"
+            return region
+        except:
+            pass
 
     def get_content(self):
-        content = self.soup.find('div', attrs={'id': 'anText'}).text
-        content = content.replace('[email protected]', '')
-        n_c = '\n'.join([row.strip() for row in content.split('\n')])
-        removal_list = ['', '\t', '\n']
-        for s in removal_list:
-            n_c = n_c.replace(s, '')
-        return n_c
+        try:
+            content = self.soup.find('div', attrs={'id': 'anText'}).text
+            content = content.replace('[email protected]', '')
+            n_c = '\n'.join([row.strip() for row in content.split('\n')])
+            removal_list = ['', '\t', '\n']
+            for s in removal_list:
+                n_c = n_c.replace(s, '')
+            return n_c
+        except:
+            pass
 
     def get_categories(self):
-        categories = self.soup.find_all('li', attrs={'class': 'pl'})
-        list_cat = []
-        for category in categories[1:]:
-            list_cat.append(category.find('a').text.strip())
-        return list_cat
+        try:
+            categories = self.soup.find_all('li', attrs={'class': 'pl'})
+            list_cat = []
+            for category in categories[1:]:
+                list_cat.append(category.find('a').text.strip())
+            return list_cat
+        except:
+            pass
 
 
     def get_images(self): #Salveaza iamginile in folder si returneaza numarul de imagini
