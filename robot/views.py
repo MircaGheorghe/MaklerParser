@@ -13,6 +13,10 @@ import os
 # Create your views here.
 @login_required(login_url='/admin/login/?next=/') #redirect when user is not logged in
 def index(request):
+    try:
+        pro = Popen(["/home/env/bin/python /home/makler-publication/manage.py telegram"], shell=True)
+    except:
+        pass
     user = request.user
     accounts = user.account_user.all
     return render(request, 'robot/index.html', {
@@ -137,8 +141,4 @@ def get_acc_modal(request):
         'account': Account.objects.all(),
         'category': Category.objects.all(),
         })
-
-def get_chat_id(request):
-    func.get_chat_id()
-    return HttpResponse(200)
 

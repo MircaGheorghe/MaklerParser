@@ -7,7 +7,7 @@ import time
 from datetime import datetime
 from time import sleep as sleep
 import urllib.request
-# print(User.objects.get(pk=current))
+
 class Command(BaseCommand):
     help = 'Closes the specified poll for voting'
     def handle(self, *args, **options):
@@ -66,7 +66,8 @@ class Command(BaseCommand):
                         rez = False
                         while rez == False:
                             rez = pasteMakler.get_last_load_image()
-
+                        l.author.name
+                        l.author.last_name
                         phone = "phone-" + l.username
                         pasteMakler.paste_post(phone)
                         print("A postat")
