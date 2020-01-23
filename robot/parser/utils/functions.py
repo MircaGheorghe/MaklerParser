@@ -43,6 +43,12 @@ def get_last_phone(cat):
         return False
     return True
 
+TG_TOKEN = '968634038:AAEWvIuKILZwg45H0qtNoN7qZLSv90za37M'
+bot = Bot(token=TG_TOKEN)
+updater = Updater(bot=bot)
 
-def send_message():
-    pass
+def send_message(id, link, username, date):
+    text = "A fost postat link-ul: {} \n De către: {}\n Data: {}".format(link, username, date)
+    bot.send_message(id, text=text)
+
+

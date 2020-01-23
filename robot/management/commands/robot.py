@@ -66,7 +66,6 @@ class Command(BaseCommand):
                         rez = False
                         while rez == False:
                             rez = pasteMakler.get_last_load_image()
-                        l.author.name
                         l.author.last_name
                         phone = "phone-" + l.username
                         pasteMakler.paste_post(phone)
@@ -75,7 +74,10 @@ class Command(BaseCommand):
                         Link.objects.filter(content=links[0].content).update(post_date=datetime.now())
                         pasteMakler.quit_driver()
 
-                        # func.send_message(links[0].content, l.username, datetime.now())
+                        try:
+                            func.send_message(l.author.last_name, links[0].content, l.username, datetime.now())
+                        except:
+                            pass
                         end = time.time()
                         result = end - start
                         print(result)

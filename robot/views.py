@@ -13,10 +13,6 @@ import os
 # Create your views here.
 @login_required(login_url='/admin/login/?next=/') #redirect when user is not logged in
 def index(request):
-    try:
-        pro = Popen(["/home/env/bin/python /home/makler-publication/manage.py telegram"], shell=True)
-    except:
-        pass
     user = request.user
     accounts = user.account_user.all
     return render(request, 'robot/index.html', {

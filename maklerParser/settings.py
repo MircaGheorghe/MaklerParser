@@ -32,7 +32,6 @@ ALLOWED_HOSTS = ['139.59.151.46', 'localhost']
 
 INSTALLED_APPS = [
     'robot',
-    'telegram',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
