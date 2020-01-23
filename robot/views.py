@@ -26,8 +26,6 @@ def index(request):
         'form':NameForm(),
         })
 
-
-
 def page_logout(request):
     logout(request)
     return redirect('home')

@@ -6,10 +6,8 @@ import requests
 import time
 from datetime import datetime
 from time import sleep as sleep
-from robot.models import mustPosted
-
-func.func()
-
+import urllib.request
+# print(User.objects.get(pk=current))
 class Command(BaseCommand):
     help = 'Closes the specified poll for voting'
     def handle(self, *args, **options):
@@ -76,12 +74,13 @@ class Command(BaseCommand):
                         Link.objects.filter(content=links[0].content).update(post_date=datetime.now())
                         pasteMakler.quit_driver()
 
-                        func.send_message(links[0].content, l.username, datetime.now())
+                        # func.send_message(links[0].content, l.username, datetime.now())
                         end = time.time()
                         result = end - start
                         print(result)
                         f.close()
                     print("a fost oprit")
                 sleep(3)
-            except:
-                func.send_error_message("A aparut o eroare la postare")
+            except Exception as e:
+                raise e
+                # func.send_error_message("A aparut o eroare la postare")
