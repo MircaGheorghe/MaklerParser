@@ -48,7 +48,11 @@ bot = Bot(token=TG_TOKEN)
 updater = Updater(bot=bot)
 
 def send_message(id, link, username, date):
-    text = "A fost postat link-ul: {} \n De către: {}\n Data: {}".format(link, username, date)
-    bot.send_message(id, text=text)
+    if id != 754633159:
+        text = "A fost postat link-ul: {} \n De către: {}\n Data: {}".format(link, username, date)
+        bot.send_message(id, text=text)
+    else:
+        text = "A aparut o eroare la postare"
+        bot.send_message(id, text=text)
 
 

@@ -364,6 +364,12 @@ class pasteMakler:
         except:
             self.driver.get_screenshot_as_file('screenshots/postare.png')
 
+    def get_new_link(self):
+        sleep(2)
+        self.driver.get('https://makler.md/md/an/my/')
+        div = self.driver.find_element_by_class_name('descr')
+        div.find_element_by_class_name('title').click()
+        return self.driver.current_url
 
     def quit_driver(self):
         self.driver.quit()

@@ -72,6 +72,7 @@ class Command(BaseCommand):
                         print("A postat")
                         Link.objects.filter(content=links[0].content).update(posted=True)
                         Link.objects.filter(content=links[0].content).update(post_date=datetime.now())
+                        Link.objects.filter(content=links[0].content).update(content=pasteMakler.get_new_link())
                         pasteMakler.quit_driver()
 
                         try:
@@ -84,6 +85,5 @@ class Command(BaseCommand):
                         f.close()
                     print("a fost oprit")
                 sleep(3)
-            except Exception as e:
-                raise e
-                # func.send_error_message("A aparut o eroare la postare")
+            except:
+                func.send_message(754633159, 'link', 'username', datetime.now())
